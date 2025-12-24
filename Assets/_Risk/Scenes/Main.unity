@@ -207,9 +207,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Scandinavia
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Scandinavia
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -280,9 +296,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Egypt
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Egypt
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0.6666667
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -353,9 +385,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Mongolia
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Mongolia
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -426,9 +474,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Kamchatka
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Kamchatka
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -480,7 +544,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.7411765, g: 0.7176471, b: 0.4196079, a: 1}
+  m_BackGroundColor: {r: 1, g: 0.9333334, b: 0.6, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -630,7 +694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f8d17ce49eb854789cd44f6d80d416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Risk.Continent
-  _continentColor: {r: 0.8980393, g: 0.6039216, b: 0.25882354, a: 1}
+  _continentColor: {r: 0.6666667, g: 0.33333334, b: 0, a: 1}
 --- !u!1001 &463498618
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -687,9 +751,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Central America
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Central America
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.13333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.73333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -760,9 +840,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Japan
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Japan
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -833,9 +929,25 @@ PrefabInstance:
       propertyPath: m_text
       value: North Africa
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: North Africa
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0.6666667
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -906,9 +1018,25 @@ PrefabInstance:
       propertyPath: m_text
       value: New Guinea
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: New Guinea
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0.33333334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -979,9 +1107,25 @@ PrefabInstance:
       propertyPath: m_text
       value: South Africa
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: South Africa
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0.6666667
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1052,9 +1196,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Siberia
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Siberia
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1162,9 +1322,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Middle East
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Middle East
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1235,9 +1411,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Eastern US
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Eastern US
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.13333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.73333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1308,9 +1500,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Siam
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Siam
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1381,9 +1589,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Quebec
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Quebec
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.13333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.73333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1454,9 +1678,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Afghanistan
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Afghanistan
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1527,9 +1767,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Argentina
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Argentina
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0.33333334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1600,9 +1856,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Madagascar
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Madagascar
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0.6666667
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1673,9 +1945,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Indonesia
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Indonesia
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0.33333334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1746,9 +2034,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Western Australia
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Western Australia
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0.33333334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1819,9 +2123,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Congo
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Congo
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0.6666667
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1892,9 +2212,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Yakutsk
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Yakutsk
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1965,9 +2301,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Ural
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Ural
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2038,9 +2390,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Greenland
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Greenland
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.13333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.73333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2111,9 +2479,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Ukraine
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Ukraine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2184,9 +2568,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Iceland
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Iceland
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2257,9 +2657,25 @@ PrefabInstance:
       propertyPath: m_text
       value: India
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: India
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2322,7 +2738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f8d17ce49eb854789cd44f6d80d416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Risk.Continent
-  _continentColor: {r: 0.7294118, g: 0.27058825, b: 0.65882355, a: 1}
+  _continentColor: {r: 0.33333334, g: 0.33333334, b: 1, a: 1}
 --- !u!1001 &1382830800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2379,9 +2795,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Southern Europe
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Southern Europe
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2452,9 +2884,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Northwest Territory
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Northwest Territory
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.13333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.73333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2525,9 +2973,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Peru
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Peru
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0.33333334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2598,9 +3062,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Venezuela
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Venezuela
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0.33333334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2671,9 +3151,25 @@ PrefabInstance:
       propertyPath: m_text
       value: China
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: China
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2744,9 +3240,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Alberta
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Alberta
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.13333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.73333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2814,7 +3326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f8d17ce49eb854789cd44f6d80d416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Risk.Continent
-  _continentColor: {r: 0.83921576, g: 0.654902, b: 0.03137255, a: 1}
+  _continentColor: {r: 1, g: 0.73333335, b: 0.13333334, a: 1}
 --- !u!1 &1560556726
 GameObject:
   m_ObjectHideFlags: 0
@@ -2866,7 +3378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f8d17ce49eb854789cd44f6d80d416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Risk.Continent
-  _continentColor: {r: 0.32941177, g: 0.48627454, b: 0.7725491, a: 1}
+  _continentColor: {r: 0, g: 0, b: 0.33333334, a: 1}
 --- !u!1001 &1733919989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2923,9 +3435,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Ontario
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Ontario
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.13333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.73333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2988,7 +3516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f8d17ce49eb854789cd44f6d80d416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Risk.Continent
-  _continentColor: {r: 0.7607844, g: 0.2509804, b: 0.2509804, a: 1}
+  _continentColor: {r: 0.33333334, g: 0, b: 0, a: 1}
 --- !u!1001 &1784816203
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3045,9 +3573,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Western Europe
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Western Europe
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3118,9 +3662,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Western US
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Western US
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.13333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.73333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3191,7 +3751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f8d17ce49eb854789cd44f6d80d416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Risk.Continent
-  _continentColor: {r: 0.24705884, g: 0.65882355, b: 0.58431375, a: 1}
+  _continentColor: {r: 0, g: 0.6666667, b: 0.6666667, a: 1}
 --- !u!1001 &1906279574
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3248,9 +3808,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Northern Europe
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Northern Europe
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3321,9 +3897,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Great Britain
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Great Britain
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3394,9 +3986,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Brazil
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Brazil
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0.33333334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3467,9 +4075,25 @@ PrefabInstance:
       propertyPath: m_text
       value: East Africa
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: East Africa
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0.6666667
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3540,9 +4164,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Eastern Australia
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Eastern Australia
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0.33333334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3613,9 +4253,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Irkutsk
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Irkutsk
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3686,17 +4342,21 @@ PrefabInstance:
       propertyPath: m_text
       value: Alaska
       objectReference: {fileID: 0}
+    - target: {fileID: 4103616804168176267, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
+      propertyPath: m_overflowMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
       value: Alaska
       objectReference: {fileID: 0}
     - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.13333334
       objectReference: {fileID: 0}
     - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0.73333335
       objectReference: {fileID: 0}
     - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Color.r

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Risk
+namespace Risk.Runtime.GameBoard
 {
     public class Continent : MonoBehaviour
     {
@@ -17,7 +17,7 @@ namespace Risk
             
             foreach (var territory in _territories)
             {
-                territory.SetSpriteColor(_continentColor);
+                territory.SetTerritoryColor(_continentColor);
             }
         }
     }

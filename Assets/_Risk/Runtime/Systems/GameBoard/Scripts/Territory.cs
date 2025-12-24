@@ -3,7 +3,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 
-namespace Risk
+namespace Risk.Runtime.GameBoard
 {
     public class Territory : MonoBehaviour
     {
@@ -12,14 +12,16 @@ namespace Risk
         
         [Header("Data")] 
         [SerializeField] private string _territoryName;
-
+        
         [Header("References")] 
         [SerializeField] private TMP_Text _nameTMPText;
         [SerializeField] private TMP_Text _troopsNumberTMPText;
-        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private SpriteRenderer _territorySprite;
+        [SerializeField] private SpriteRenderer _troopsNumberBackGroundSprite;
         
         private int _troopCount = 0;
-
+        private string _ownerId;
+        
         public int TroopCount
         {
             get => _troopCount;
@@ -30,9 +32,13 @@ namespace Risk
             }
         }
 
-        public void SetSpriteColor(Color color)
+        /// <summary>
+        /// Sets the color of the territory based on <see cref="Continent"/>
+        /// </summary>
+        /// <param name="color"></param>
+        public void SetTerritoryColor(Color color)
         {
-            _spriteRenderer.color = color;
+            _territorySprite.color = color;
         }
 
         private void OnValidate()

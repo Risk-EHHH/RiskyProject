@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Risk
+namespace Risk.Runtime.BackendCommunication
 {
     public class Player
     {

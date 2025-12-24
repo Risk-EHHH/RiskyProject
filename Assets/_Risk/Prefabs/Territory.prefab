@@ -142,6 +142,7 @@ MonoBehaviour:
   _territoryName: Territory
   _nameTMPText: {fileID: 3703573675075712446}
   _troopsNumberTMPText: {fileID: 4103616804168176267}
+  _spriteRenderer: {fileID: 8664029082564997293}
 --- !u!1 &4838458834307565902
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,8 +457,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2
-  m_fontSizeBase: 2
+  m_fontSize: 3
+  m_fontSizeBase: 3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 0

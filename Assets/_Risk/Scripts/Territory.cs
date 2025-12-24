@@ -1,5 +1,3 @@
-using System;
-using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -18,7 +16,8 @@ namespace Risk
         [Header("References")] 
         [SerializeField] private TMP_Text _nameTMPText;
         [SerializeField] private TMP_Text _troopsNumberTMPText;
-
+        [SerializeField] private SpriteRenderer _spriteRenderer;
+        
         private int _troopCount = 0;
 
         public int TroopCount
@@ -29,6 +28,11 @@ namespace Risk
                 _troopCount = value;
                 _troopsNumberTMPText.text = _troopCount.ToString();
             }
+        }
+
+        public void SetSpriteColor(Color color)
+        {
+            _spriteRenderer.color = color;
         }
 
         private void OnValidate()
@@ -44,5 +48,7 @@ namespace Risk
         {
             TroopCount = Random.Range(1, 5);
         }
+        
+        
     }
 }

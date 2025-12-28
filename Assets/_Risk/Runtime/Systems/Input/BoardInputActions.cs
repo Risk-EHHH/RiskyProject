@@ -111,6 +111,24 @@ namespace Risk.Runtime.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Zoom"",
+                    ""type"": ""Value"",
+                    ""id"": ""675a775c-e531-4c0f-8ac4-c701ef2e12d5"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Pan"",
+                    ""type"": ""Value"",
+                    ""id"": ""dba37f8b-b474-4526-b3ac-80484604fe62"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -135,6 +153,28 @@ namespace Risk.Runtime.Input
                     ""action"": ""Pointer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""97386ba2-840c-4025-a187-45eac5b5364e"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0df3b18c-9749-45aa-81fb-8558cbb83369"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pan"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -145,6 +185,8 @@ namespace Risk.Runtime.Input
             m_Board = asset.FindActionMap("Board", throwIfNotFound: true);
             m_Board_Click = m_Board.FindAction("Click", throwIfNotFound: true);
             m_Board_Pointer = m_Board.FindAction("Pointer", throwIfNotFound: true);
+            m_Board_Zoom = m_Board.FindAction("Zoom", throwIfNotFound: true);
+            m_Board_Pan = m_Board.FindAction("Pan", throwIfNotFound: true);
         }
 
         ~@BoardInputActions()
@@ -227,6 +269,8 @@ namespace Risk.Runtime.Input
         private List<IBoardActions> m_BoardActionsCallbackInterfaces = new List<IBoardActions>();
         private readonly InputAction m_Board_Click;
         private readonly InputAction m_Board_Pointer;
+        private readonly InputAction m_Board_Zoom;
+        private readonly InputAction m_Board_Pan;
         /// <summary>
         /// Provides access to input actions defined in input action map "Board".
         /// </summary>
@@ -246,6 +290,14 @@ namespace Risk.Runtime.Input
             /// Provides access to the underlying input action "Board/Pointer".
             /// </summary>
             public InputAction @Pointer => m_Wrapper.m_Board_Pointer;
+            /// <summary>
+            /// Provides access to the underlying input action "Board/Zoom".
+            /// </summary>
+            public InputAction @Zoom => m_Wrapper.m_Board_Zoom;
+            /// <summary>
+            /// Provides access to the underlying input action "Board/Pan".
+            /// </summary>
+            public InputAction @Pan => m_Wrapper.m_Board_Pan;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -278,6 +330,12 @@ namespace Risk.Runtime.Input
                 @Pointer.started += instance.OnPointer;
                 @Pointer.performed += instance.OnPointer;
                 @Pointer.canceled += instance.OnPointer;
+                @Zoom.started += instance.OnZoom;
+                @Zoom.performed += instance.OnZoom;
+                @Zoom.canceled += instance.OnZoom;
+                @Pan.started += instance.OnPan;
+                @Pan.performed += instance.OnPan;
+                @Pan.canceled += instance.OnPan;
             }
 
             /// <summary>
@@ -295,6 +353,12 @@ namespace Risk.Runtime.Input
                 @Pointer.started -= instance.OnPointer;
                 @Pointer.performed -= instance.OnPointer;
                 @Pointer.canceled -= instance.OnPointer;
+                @Zoom.started -= instance.OnZoom;
+                @Zoom.performed -= instance.OnZoom;
+                @Zoom.canceled -= instance.OnZoom;
+                @Pan.started -= instance.OnPan;
+                @Pan.performed -= instance.OnPan;
+                @Pan.canceled -= instance.OnPan;
             }
 
             /// <summary>
@@ -349,6 +413,20 @@ namespace Risk.Runtime.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnPointer(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Zoom" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnZoom(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Pan" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnPan(InputAction.CallbackContext context);
         }
     }
 }

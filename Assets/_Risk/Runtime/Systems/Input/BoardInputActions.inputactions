@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "name": "BoardInputActions",
+    "maps": [
+        {
+            "name": "Board",
+            "id": "5c6e7e5e-0487-4ce1-a6fd-fa76fe20e3c1",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "f46358e8-ddc9-42ba-9135-db68eafb479b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pointer",
+                    "type": "Value",
+                    "id": "74f68368-fdde-4892-9018-03837ba62a23",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a30d9cb3-a6c8-4a57-bacc-d236a1df8753",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1d2e334b-ab3f-4b77-94e1-e1c733f3e771",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pointer",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Risk.Runtime.BackendCommunication
@@ -10,17 +11,10 @@ namespace Risk.Runtime.BackendCommunication
     public class GameStateModel : MonoBehaviour
     {
         [SerializeField] private GameInfo _gameInfo;
+        [SerializeField] private List<PlayerInfo> _players;
 
-        public GameInfo GameInfo
-        {
-            get => _gameInfo;
-            set
-            {
-                _gameInfo = value;
-                Debug.Log($"[GameStateModel] Game Info Updated: {_gameInfo}");
-            }
-        }
-        
+        public GameInfo GameInfo { get => _gameInfo; set => _gameInfo = value; }
+        public List<PlayerInfo> Players { get => _players; set => _players = value; }
         
     }
     

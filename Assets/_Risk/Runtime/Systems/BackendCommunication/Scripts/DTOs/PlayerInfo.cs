@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Risk.Runtime.BackendCommunication
 {
@@ -10,18 +11,54 @@ namespace Risk.Runtime.BackendCommunication
     [Serializable]
     public class PlayerInfo
     {
+        [SerializeField] private string _id;
+        [SerializeField] private string _name;
+        [SerializeField] private string _color;
+        [SerializeField] private List<string> _territories;
+        [SerializeField] private int _armyPool;
+        [SerializeField] private bool _isEliminated;
+
         [JsonProperty("id")]
-        public string Id { get; set; } // Unique ID of this player.
+        public string Id 
+        { 
+            get => _id; 
+            set => _id = value; 
+        }
+
         [JsonProperty("name")]
-        public string Name { get; set; } // Name of this player.
+        public string Name 
+        { 
+            get => _name; 
+            set => _name = value; 
+        }
+
         [JsonProperty("color")]
-        public string Color { get; set; }  // Color of this player.
+        public string Color 
+        { 
+            get => _color; 
+            set => _color = value; 
+        }
+
         [JsonProperty("territories")]
-        public List<string> Territories { get; set; } // List of territories controlled by this player.
+        public List<string> Territories 
+        { 
+            get => _territories; 
+            set => _territories = value; 
+        }
+
         [JsonProperty("army_pool")]
-        public int ArmyPool { get; set; } // Number of troops available to this player for reinforcement.
+        public int ArmyPool 
+        { 
+            get => _armyPool; 
+            set => _armyPool = value; 
+        }
+
         [JsonProperty("is_eliminated")]
-        public bool IsEliminated { get; set; } // True if this player has been eliminated from the game.
+        public bool IsEliminated 
+        { 
+            get => _isEliminated; 
+            set => _isEliminated = value; 
+        }
         
         public override string ToString()
         {

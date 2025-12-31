@@ -1,9 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Networking;
 
 namespace Risk.Runtime.BackendCommunication
@@ -13,56 +14,67 @@ namespace Risk.Runtime.BackendCommunication
     /// </summary>
     public class BackendManager : MonoBehaviour
     {
-        [SerializeField] private string _defaultLocalURL = "http://127.0.0.1:8000"; // default url for local testing
-        [SerializeField] private string _gameId = "000"; // default game id, game id logic is currently missing on backend
+        [SerializeField] private string _defaultLocalURL = "http://127.0.0.1:8000";
+        [SerializeField] private string _gameId = "000";
 
-        private GameStateModel _gameStateModel;
-
-        #region MonoBehaviour
-
-        private void Awake()
-        {
-            _gameStateModel = GetComponent<GameStateModel>();
-            Debug.Assert(_gameStateModel != null, "GameStateModel component not found.");
-            if (_gameStateModel == null)
-            {
-                throw new Exception("GameStateModel component not found.");
-            }
-        }
-
-        private void Update()
-        {
-            if (Keyboard.current.f1Key.wasPressedThisFrame) // F1 to call GetGameInfo, used for testing
-            {
-                StartCoroutine(GetGameInfo());
-            }
-        }
-        
-
-        #endregion
-        
         /// <summary>
-        /// Retrieves game info from backend.
+        /// Gets GameInfo + all PlayerInfo in optimal sequence (1 GameInfo call + N Player calls)
         /// </summary>
-        /// <returns></returns>
-        public IEnumerator GetGameInfo()
+        public async Task<(GameInfo gameInfo, List<PlayerInfo> players)> GetInitialDataAsync(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                // Step 1: Get GameInfo ONCE
+                GameInfo gameInfo = await GetGameInfoAsync(cancellationToken);
+                
+                // Step 2: Get all players in parallel using gameInfo.Players
+                List<PlayerInfo> players = await GetPlayersParallelAsync(gameInfo.Players, cancellationToken);
+                
+                Debug.Log($"✅ Loaded {gameInfo.Territories.Count} territories, {players.Count} players");
+                return (gameInfo, players);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"GetInitialData failed: {ex.Message}");
+                return (null, null);
+            }
+        }
+
+        private async Task<GameInfo> GetGameInfoAsync(CancellationToken cancellationToken = default)
         {
             string url = $"{_defaultLocalURL}/{_gameId}/info";
-
-            using UnityWebRequest webRequest = UnityWebRequest.Get(url);
-            yield return webRequest.SendWebRequest();
-
-            if (webRequest.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError($"GetGameInfo failed: {webRequest.error}");
-                yield break;
-            }
+            using var request = UnityWebRequest.Get(url);
             
-            string json = webRequest.downloadHandler.text;
-            Debug.Log($"GetGameInfo response: {json}");
-            
-            // TODO deserialize json into GameInfo object
-            _gameStateModel.GameInfo = JsonConvert.DeserializeObject<GameInfo>(json);
+            await request.SendWebRequest();
+
+            if (HasError(request)) 
+                throw new Exception($"GetGameInfo failed: {request.error}");
+
+            string json = request.downloadHandler.text;
+            return JsonConvert.DeserializeObject<GameInfo>(json);
         }
+
+        private async Task<List<PlayerInfo>> GetPlayersParallelAsync(List<string> playerIds, CancellationToken cancellationToken = default)
+        {
+            var playerTasks = playerIds.Select(playerId => GetPlayerInfoAsync(playerId, cancellationToken));
+            PlayerInfo[] players = await Task.WhenAll(playerTasks);
+            return players.ToList();
+        }
+
+        private async Task<PlayerInfo> GetPlayerInfoAsync(string playerId, CancellationToken cancellationToken = default)
+        {
+            string url = $"{_defaultLocalURL}/{_gameId}/players/{playerId}/info";
+            using var request = UnityWebRequest.Get(url);
+            
+            await request.SendWebRequest();
+
+            if (HasError(request)) 
+                throw new Exception($"GetPlayerInfo({playerId}) failed: {request.error}");
+
+            return JsonConvert.DeserializeObject<PlayerInfo>(request.downloadHandler.text);
+        }
+
+        private static bool HasError(UnityWebRequest request) 
+            => request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError;
     }
 }

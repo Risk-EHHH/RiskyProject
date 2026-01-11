@@ -179,6 +179,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 153745629}
+  - component: {fileID: 153745630}
   m_Layer: 0
   m_Name: GameBoard
   m_TagString: Untagged
@@ -202,6 +203,26 @@ Transform:
   - {fileID: 699408105}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &153745630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153745628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e55c310d7a01064bbcaf1875c62d613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameBoardView
+  _gameStateModel: {fileID: 768583273}
+  _boardContinents:
+  - {fileID: 1558761484}
+  - {fileID: 1782049480}
+  - {fileID: 1560556728}
+  - {fileID: 455987225}
+  - {fileID: 1830518358}
+  - {fileID: 1372379395}
 --- !u!1001 &169123813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1359,7 +1380,7 @@ Transform:
   m_GameObject: {fileID: 768583270}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.07142, y: 0.72466, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

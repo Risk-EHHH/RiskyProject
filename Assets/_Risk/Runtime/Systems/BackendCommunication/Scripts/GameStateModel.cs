@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,12 +11,31 @@ namespace Risk.Runtime.BackendCommunication
     /// </summary>
     public class GameStateModel : MonoBehaviour
     {
+        public event Action<GameInfo> GameInfoUpdated;
+        public event Action<List<PlayerInfo>> PlayersUpdated;
+        
         [SerializeField] private GameInfo _gameInfo;
         [SerializeField] private List<PlayerInfo> _players;
 
-        public GameInfo GameInfo { get => _gameInfo; set => _gameInfo = value; }
-        public List<PlayerInfo> Players { get => _players; set => _players = value; }
+        public GameInfo GameInfo
+        {
+            get => _gameInfo;
+            set
+            {
+                _gameInfo = value;
+                GameInfoUpdated?.Invoke(_gameInfo);
+            }
+        }
         
+        
+        public List<PlayerInfo> Players { 
+            get => _players;
+            set
+            {
+                _players = value;
+                PlayersUpdated?.Invoke(_players);
+            }
+        }
     }
     
 }

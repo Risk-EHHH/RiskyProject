@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace Risk.Runtime.GameBoard
 {
-    public class Territory : MonoBehaviour
+    public class BoardTerritory : MonoBehaviour
     {
         [Header("Settings")] 
         [SerializeField] private bool _showName;
@@ -33,7 +33,7 @@ namespace Risk.Runtime.GameBoard
         }
 
         /// <summary>
-        /// Sets the color of the territory based on <see cref="Continent"/>
+        /// Sets the color of the territory based on <see cref="BoardContinent"/>
         /// </summary>
         /// <param name="color"></param>
         public void SetTerritoryColor(Color color)
@@ -49,12 +49,5 @@ namespace Risk.Runtime.GameBoard
             _territoryName = gameObject.transform.name;
             _nameTMPText.text = _territoryName;
         }
-
-        private void Start()
-        {
-            TroopCount = Random.Range(1, 5);
-        }
-        
-        
     }
 }

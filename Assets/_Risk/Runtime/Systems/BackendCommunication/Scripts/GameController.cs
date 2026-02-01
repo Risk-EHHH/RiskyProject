@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Risk.Runtime.Utils;
 using UnityEngine;
 
 namespace Risk.Runtime.BackendCommunication
@@ -12,10 +13,10 @@ namespace Risk.Runtime.BackendCommunication
         private void Awake()
         {
             _backendManager = GetComponent<BackendManager>();
-            _gameStateModel = GetComponent<GameStateModel>();
+            DependencyValidator.ComponentExist(_backendManager, this);
             
-            Debug.Assert(_backendManager != null, "BackendManager component not found!");
-            Debug.Assert(_gameStateModel != null, "GameStateModel component not found!");
+            _gameStateModel = GetComponent<GameStateModel>();
+            DependencyValidator.ComponentExist(_gameStateModel, this);
         }
 
         private async void Start()

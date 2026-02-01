@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Risk.Runtime.BackendCommunication;
+using Risk.Runtime.Utils;
 using UnityEngine;
 
 
@@ -19,6 +21,13 @@ namespace Risk.Runtime.GameBoard
         private Dictionary<string, BoardTerritory> _territoryViews = new();
 
         #region MonoBehaviour
+
+        private void Awake()
+        {
+            DependencyValidator.NotNull(_gameStateModel, this);
+            DependencyValidator.ListNotNull(_boardContinents, this);
+        }
+
         private void OnEnable()
         {
             _gameStateModel.GameInfoUpdated += OnGameInfoUpdated;

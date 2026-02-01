@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Risk.Runtime.Utils
 {
+    /// <summary>
+    /// Provides utility methods for working with colors.
+    /// </summary>
     public static class ColorUtils
     {
         public static Color FromColorName(string colorName)

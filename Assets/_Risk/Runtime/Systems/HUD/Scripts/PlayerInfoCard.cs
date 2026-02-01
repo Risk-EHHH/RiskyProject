@@ -32,7 +32,6 @@ namespace Risk.Runtime.HUD
             _playerName.text = playerInfo.Name;
             _playerArmyPool.text = $"Troops: {playerInfo.ArmyPool.ToString()}";
             _cardBackground.color = ColorUtils.FromColorName(playerInfo.Color);
-            Debug.Log(_cardBackground.color);
         }
     }
 }

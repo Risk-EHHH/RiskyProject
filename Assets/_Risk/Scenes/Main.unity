@@ -1786,7 +1786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2042443971915140803, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: _territoryName
-      value: Eastern US
+      value: EasternUnitedStates
       objectReference: {fileID: 0}
     - target: {fileID: 3703573675075712446, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_text
@@ -1798,7 +1798,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
-      value: Eastern US
+      value: EasternUnitedStates
       objectReference: {fileID: 0}
     - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Color.b
@@ -4116,7 +4116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2042443971915140803, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: _territoryName
-      value: Western US
+      value: WesternUnitedStates
       objectReference: {fileID: 0}
     - target: {fileID: 3703573675075712446, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_text
@@ -4128,7 +4128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4505832137312358502, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Name
-      value: Western US
+      value: WesternUnitedStates
       objectReference: {fileID: 0}
     - target: {fileID: 8664029082564997293, guid: e8a3f9e29a39fa1489bb7b2f67764023, type: 3}
       propertyPath: m_Color.b

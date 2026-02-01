@@ -31,23 +31,8 @@ namespace Risk.Runtime.HUD
         {
             _playerName.text = playerInfo.Name;
             _playerArmyPool.text = $"Troops: {playerInfo.ArmyPool.ToString()}";
-            _cardBackground.color = FromColorName(playerInfo.Color);
+            _cardBackground.color = ColorUtils.FromColorName(playerInfo.Color);
             Debug.Log(_cardBackground.color);
-        }
-        
-        private static Color FromColorName(string colorName)
-        {
-            colorName = colorName.ToLower();
-            switch (colorName)
-            {
-                case "red": return Color.red;
-                case "green": return Color.green;
-                case "blue": return Color.blue;
-                case "yellow": return Color.yellow;
-                case "purple": return Color.magenta;
-                case "black": return Color.black;
-                default: return Color.white;
-            }
         }
     }
 }

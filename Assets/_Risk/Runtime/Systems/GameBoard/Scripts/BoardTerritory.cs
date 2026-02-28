@@ -1,3 +1,5 @@
+using System;
+using Risk.Runtime.Utils;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -5,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace Risk.Runtime.GameBoard
 {
-    public class Territory : MonoBehaviour
+    public class BoardTerritory : MonoBehaviour
     {
         [Header("Settings")] 
         [SerializeField] private bool _showName;
@@ -32,14 +34,7 @@ namespace Risk.Runtime.GameBoard
             }
         }
 
-        /// <summary>
-        /// Sets the color of the territory based on <see cref="Continent"/>
-        /// </summary>
-        /// <param name="color"></param>
-        public void SetTerritoryColor(Color color)
-        {
-            _territorySprite.color = color;
-        }
+        #region MonoBehaviour
 
         private void OnValidate()
         {
@@ -50,11 +45,25 @@ namespace Risk.Runtime.GameBoard
             _nameTMPText.text = _territoryName;
         }
 
-        private void Start()
+        private void Awake()
         {
-            TroopCount = Random.Range(1, 5);
+            DependencyValidator.NotNull(_territorySprite, this);
+            DependencyValidator.NotNull(_troopsNumberBackGroundSprite, this);
+            DependencyValidator.NotNull(_troopsNumberTMPText, this);
+            DependencyValidator.NotNull(_nameTMPText, this);
         }
-        
-        
+
+        #endregion
+
+        /// <summary>
+        /// Sets the color of the territory based on <see cref="BoardContinent"/>
+        /// </summary>
+        /// <param name="color"></param>
+        public void SetTerritoryColor(Color color)
+        {
+            _territorySprite.color = color;
+        }
+
+
     }
 }

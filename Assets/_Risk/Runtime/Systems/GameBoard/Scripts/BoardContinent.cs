@@ -4,18 +4,20 @@ using UnityEngine;
 
 namespace Risk.Runtime.GameBoard
 {
-    public class Continent : MonoBehaviour
+    public class BoardContinent : MonoBehaviour
     {
         [SerializeField] private Color _continentColor;
         
-        private List<Territory> _territories;
-        
+        private List<BoardTerritory> _boardTerritories;
+
+        public List<BoardTerritory> BoardTerritories => _boardTerritories;
+
         private void OnValidate()
         {
-            _territories = GetComponentsInChildren<Territory>().ToList();
+            _boardTerritories = GetComponentsInChildren<BoardTerritory>().ToList();
             
             
-            foreach (var territory in _territories)
+            foreach (var territory in BoardTerritories)
             {
                 territory.SetTerritoryColor(_continentColor);
             }

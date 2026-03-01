@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Risk.Runtime.BackendCommunication;
+using Risk.Runtime.Input;
 using Risk.Runtime.Utils;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace Risk.Runtime.GameBoard
     public class GameBoardView : MonoBehaviour
     {
         [Header("References")]
+        [SerializeField] private BoardInputManager _boardInputManager;
         [SerializeField] private GameStateModel _gameStateModel;
         [SerializeField] private List<BoardContinent> _boardContinents;
 
@@ -32,12 +34,16 @@ namespace Risk.Runtime.GameBoard
         {
             _gameStateModel.GameInfoUpdated += OnGameInfoUpdated;
             _gameStateModel.PlayersUpdated += OnPlayersUpdated;
+            
+            _boardInputManager.BoardTerritoryClicked += OnBoardTerritoryClicked;
         }
         
         private void OnDisable()
         {
             _gameStateModel.GameInfoUpdated -= OnGameInfoUpdated;
             _gameStateModel.PlayersUpdated -= OnPlayersUpdated;
+            
+            _boardInputManager.BoardTerritoryClicked -= OnBoardTerritoryClicked;
         }
 
         private void Start()
@@ -122,5 +128,32 @@ namespace Risk.Runtime.GameBoard
         {
             return territoryName.Replace(" ", "").ToLower();
         }
+        
+        private void OnBoardTerritoryHovered(BoardTerritory hoveredTerritory)
+        {
+            hoveredTerritory.HoverTerritory(true);
+            foreach (var boardContinent in _boardContinents)
+            {
+                foreach (var boardTerritory in boardContinent.BoardTerritories)
+                {
+                    if (boardTerritory != hoveredTerritory)
+                        boardTerritory.HoverTerritory(false);
+                }
+            }
+        }
+        
+        private void OnBoardTerritoryClicked(BoardTerritory selectedTerritory)
+        {
+            selectedTerritory.SelectTerritory(true);
+            foreach (var boardContinent in _boardContinents)
+            {
+                foreach (var boardTerritory in boardContinent.BoardTerritories)
+                {
+                    if (boardTerritory != selectedTerritory)
+                        boardTerritory.SelectTerritory(false);
+                }
+            }
+        }
+        
     }
 }

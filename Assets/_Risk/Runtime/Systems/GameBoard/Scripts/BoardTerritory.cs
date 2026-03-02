@@ -19,6 +19,7 @@ namespace Risk.Runtime.GameBoard
         [SerializeField] private TMP_Text _nameTMPText;
         [SerializeField] private TMP_Text _troopsNumberTMPText;
         [SerializeField] private SpriteRenderer _territorySprite;
+        [SerializeField] private SpriteRenderer _territorySpriteSelected;
         [SerializeField] private SpriteRenderer _troopsNumberBackGroundSprite;
         
         private int _troopCount = 0;
@@ -64,6 +65,18 @@ namespace Risk.Runtime.GameBoard
             _territorySprite.color = color;
         }
 
+        public void HoverTerritory(bool isHovered)
+        {
+            _territorySpriteSelected.color = Color.softYellow;
+            _territorySpriteSelected.enabled = isHovered; 
+            
+        }
+        
+        public void SelectTerritory(bool isSelected)
+        {
+            _territorySpriteSelected.color = Color.yellowNice;  
+            _territorySpriteSelected.enabled = isSelected;  
+        }
 
     }
 }

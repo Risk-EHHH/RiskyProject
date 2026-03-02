@@ -1,4 +1,9 @@
+using System;
+using System.Collections.Generic;
+using Risk.Runtime.BackendCommunication;
+using Risk.Runtime.GameBoard;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Risk.Runtime.Input
@@ -14,7 +19,11 @@ namespace Risk.Runtime.Input
         
         private BoardInputActions _inputActions;
         private Camera _mainCamera;
+        
+        public event Action<BoardTerritory> BoardTerritoryClicked;
 
+        #region MonoBehaviour
+            
         private void Awake()
         {
             _inputActions = new BoardInputActions();
@@ -45,6 +54,8 @@ namespace Risk.Runtime.Input
             _inputActions.Disable();
         }
 
+        #endregion
+        
         private void OnBoardClick(InputAction.CallbackContext ctx)
         {
             Vector2 screenPos = _inputActions.Board.Pointer.ReadValue<Vector2>();
@@ -53,7 +64,8 @@ namespace Risk.Runtime.Input
             Collider2D hit = Physics2D.OverlapPoint(worldPos, _boardLayerMask);
             if (hit != null)
             {
-                // TODO: Invoke events based on what is clicked, e.g. Territory -> ClickedBoardElement?.Invoke(Territory)
+                BoardTerritory clickedBoardTerritory = hit.transform.parent.gameObject.GetComponent<BoardTerritory>();
+                BoardTerritoryClicked?.Invoke(clickedBoardTerritory);
                 Debug.Log($"Clicked territory: {hit.transform.parent.name}", hit.gameObject);
             }
             else

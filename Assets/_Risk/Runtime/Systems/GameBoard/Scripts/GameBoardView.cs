@@ -135,20 +135,20 @@ namespace Risk.Runtime.GameBoard
         
         private void OnBoardTerritoryHovered(BoardTerritory hoveredTerritory)
         {
-            hoveredTerritory.HoverTerritory(true);
+            hoveredTerritory.IsHovered = true;
             if (_lastHoveredTerritory != null && _lastHoveredTerritory != hoveredTerritory)
             {
-                _lastHoveredTerritory.HoverTerritory(false);
+                _lastHoveredTerritory.IsHovered = false;
             }
             _lastHoveredTerritory = hoveredTerritory;
         }
         
         private void OnBoardTerritoryClicked(BoardTerritory selectedTerritory)
         {
-            selectedTerritory.SelectTerritory(true);
+            selectedTerritory.IsSelected = true;
             if (_lastSelectedTerritory != null && _lastSelectedTerritory != selectedTerritory)
             {
-                _lastSelectedTerritory.SelectTerritory(false);
+                _lastSelectedTerritory.IsSelected = false;
             }
             _lastSelectedTerritory = selectedTerritory;
         }

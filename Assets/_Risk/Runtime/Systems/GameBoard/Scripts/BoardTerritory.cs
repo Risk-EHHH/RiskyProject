@@ -22,8 +22,10 @@ namespace Risk.Runtime.GameBoard
         [SerializeField] private SpriteRenderer _territorySpriteSelected;
         [SerializeField] private SpriteRenderer _troopsNumberBackGroundSprite;
         
-        private int _troopCount = 0;
         private string _ownerId;
+        private int _troopCount = 0;
+        
+        private bool _isSelected;
         
         public int TroopCount
         {
@@ -33,6 +35,12 @@ namespace Risk.Runtime.GameBoard
                 _troopCount = value;
                 _troopsNumberTMPText.text = _troopCount.ToString();
             }
+        }
+
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set => _isSelected = value;
         }
 
         #region MonoBehaviour
@@ -67,15 +75,17 @@ namespace Risk.Runtime.GameBoard
 
         public void HoverTerritory(bool isHovered)
         {
+            if (_isSelected) return;
+            
             _territorySpriteSelected.color = Color.softYellow;
             _territorySpriteSelected.enabled = isHovered; 
-            
         }
         
         public void SelectTerritory(bool isSelected)
         {
             _territorySpriteSelected.color = Color.yellowNice;  
             _territorySpriteSelected.enabled = isSelected;  
+            _isSelected = isSelected;
         }
 
     }

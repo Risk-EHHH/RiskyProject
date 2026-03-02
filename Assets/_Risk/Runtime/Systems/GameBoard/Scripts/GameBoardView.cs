@@ -21,7 +21,9 @@ namespace Risk.Runtime.GameBoard
         [SerializeField] private List<BoardContinent> _boardContinents;
 
         private Dictionary<string, BoardTerritory> _territoryViews = new();
-
+        private BoardTerritory _lastSelectedTerritory;
+        private BoardTerritory _lastHoveredTerritory;
+        
         #region MonoBehaviour
 
         private void Awake()
@@ -36,6 +38,7 @@ namespace Risk.Runtime.GameBoard
             _gameStateModel.PlayersUpdated += OnPlayersUpdated;
             
             _boardInputManager.BoardTerritoryClicked += OnBoardTerritoryClicked;
+            _boardInputManager.BoardTerritoryHovered += OnBoardTerritoryHovered;
         }
         
         private void OnDisable()
@@ -44,6 +47,7 @@ namespace Risk.Runtime.GameBoard
             _gameStateModel.PlayersUpdated -= OnPlayersUpdated;
             
             _boardInputManager.BoardTerritoryClicked -= OnBoardTerritoryClicked;
+            _boardInputManager.BoardTerritoryHovered -= OnBoardTerritoryHovered;
         }
 
         private void Start()
@@ -132,27 +136,21 @@ namespace Risk.Runtime.GameBoard
         private void OnBoardTerritoryHovered(BoardTerritory hoveredTerritory)
         {
             hoveredTerritory.HoverTerritory(true);
-            foreach (var boardContinent in _boardContinents)
+            if (_lastHoveredTerritory != null && _lastHoveredTerritory != hoveredTerritory)
             {
-                foreach (var boardTerritory in boardContinent.BoardTerritories)
-                {
-                    if (boardTerritory != hoveredTerritory)
-                        boardTerritory.HoverTerritory(false);
-                }
+                _lastHoveredTerritory.HoverTerritory(false);
             }
+            _lastHoveredTerritory = hoveredTerritory;
         }
         
         private void OnBoardTerritoryClicked(BoardTerritory selectedTerritory)
         {
             selectedTerritory.SelectTerritory(true);
-            foreach (var boardContinent in _boardContinents)
+            if (_lastSelectedTerritory != null && _lastSelectedTerritory != selectedTerritory)
             {
-                foreach (var boardTerritory in boardContinent.BoardTerritories)
-                {
-                    if (boardTerritory != selectedTerritory)
-                        boardTerritory.SelectTerritory(false);
-                }
+                _lastSelectedTerritory.SelectTerritory(false);
             }
+            _lastSelectedTerritory = selectedTerritory;
         }
         
     }

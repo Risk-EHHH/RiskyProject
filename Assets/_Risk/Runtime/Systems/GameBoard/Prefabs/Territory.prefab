@@ -389,6 +389,7 @@ MonoBehaviour:
   _territorySprite: {fileID: 8664029082564997293}
   _territorySpriteSelected: {fileID: 2070365757520143276}
   _troopsNumberBackGroundSprite: {fileID: 5554822021004072291}
+  _territoryCollider: {fileID: 3693729853265965098}
 --- !u!1 &4838458834307565902
 GameObject:
   m_ObjectHideFlags: 0

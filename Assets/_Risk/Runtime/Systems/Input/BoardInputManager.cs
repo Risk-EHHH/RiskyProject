@@ -21,7 +21,8 @@ namespace Risk.Runtime.Input
         private Camera _mainCamera;
         
         public event Action<BoardTerritory> BoardTerritoryClicked;
-
+        public event Action<BoardTerritory> BoardTerritoryHovered;
+        
         #region MonoBehaviour
             
         private void Awake()
@@ -54,6 +55,17 @@ namespace Risk.Runtime.Input
             _inputActions.Disable();
         }
 
+        private void Update()
+        {
+            Vector2 screenPos = _inputActions.Board.Pointer.ReadValue<Vector2>();
+            Vector2 worldPos = _mainCamera.ScreenToWorldPoint(screenPos);
+            
+            Collider2D hit = Physics2D.OverlapPoint(worldPos, _boardLayerMask);
+
+            if (hit == null) return;
+            BoardTerritory hitTerritory = hit.transform.parent.gameObject.GetComponent<BoardTerritory>();
+            BoardTerritoryHovered?.Invoke(hitTerritory);
+        }
         #endregion
         
         private void OnBoardClick(InputAction.CallbackContext ctx)

@@ -19,7 +19,7 @@ namespace Risk.Runtime.GameBoard
             
             foreach (var territory in BoardTerritories)
             {
-                territory.SetTerritoryColor(_continentColor);
+                territory.SetOriginalColor(_continentColor);
             }
         }
     }

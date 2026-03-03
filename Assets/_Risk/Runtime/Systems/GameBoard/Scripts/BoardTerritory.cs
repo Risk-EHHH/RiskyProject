@@ -21,9 +21,14 @@ namespace Risk.Runtime.GameBoard
         [SerializeField] private SpriteRenderer _territorySprite;
         [SerializeField] private SpriteRenderer _territorySpriteSelected;
         [SerializeField] private SpriteRenderer _troopsNumberBackGroundSprite;
+        [SerializeField] private PolygonCollider2D _territoryCollider;
         
-        private int _troopCount = 0;
         private string _ownerId;
+        private int _troopCount = 0;
+        private bool _isHovered;
+        private bool _isSelected;
+        private bool _isInteractive = true;
+        private Color _territoryOriginalColor;
         
         public int TroopCount
         {
@@ -34,48 +39,109 @@ namespace Risk.Runtime.GameBoard
                 _troopsNumberTMPText.text = _troopCount.ToString();
             }
         }
+        
+        public bool IsHovered
+        {
+            get => _isHovered;
+            set
+            {
+                _isHovered = value;
+                HoverTerritory(value);
+            }
+        }
+
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                _isSelected = value;  
+                SelectTerritory(value);
+            }
+                
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the territory is interactive.
+        /// When set to false, the territory becomes non-interactive, disabling its collider,
+        /// resetting hover and selection states, and applying a dimmed appearance to indicate inactivity.
+        /// When set to true, the territory regains its interactivity and original appearance.
+        /// </summary>
+        public bool IsInteractive
+        {
+            get => _isInteractive;
+            set
+            {
+                _isInteractive = value;
+                _territoryCollider.enabled = value;
+
+                if (!value)
+                {
+                    SetNotInteractiveColor();
+                    IsSelected = false;
+                    IsHovered = false;
+                }
+                else
+                {
+                    ResetTerritoryColor();
+                }
+            } 
+        }
 
         #region MonoBehaviour
 
         private void OnValidate()
         {
+            DependencyValidator.NotNull(_territorySprite, this);
+            DependencyValidator.NotNull(_troopsNumberBackGroundSprite, this);
+            DependencyValidator.NotNull(_troopsNumberTMPText, this);
+            DependencyValidator.NotNull(_nameTMPText, this);
+            
             _nameTMPText.gameObject.SetActive(_showName);
 
             if (!_showName) return;
             _territoryName = gameObject.transform.name;
             _nameTMPText.text = _territoryName;
         }
-
-        private void Awake()
-        {
-            DependencyValidator.NotNull(_territorySprite, this);
-            DependencyValidator.NotNull(_troopsNumberBackGroundSprite, this);
-            DependencyValidator.NotNull(_troopsNumberTMPText, this);
-            DependencyValidator.NotNull(_nameTMPText, this);
-        }
-
         #endregion
 
-        /// <summary>
-        /// Sets the color of the territory based on <see cref="BoardContinent"/>
-        /// </summary>
-        /// <param name="color"></param>
-        public void SetTerritoryColor(Color color)
+        public void SetOriginalColor(Color color)
+        {
+            SetTerritoryColor(color);
+            _territoryOriginalColor = color;
+        }
+ 
+        private void SetTerritoryColor(Color color)
         {
             _territorySprite.color = color;
         }
 
-        public void HoverTerritory(bool isHovered)
+        private void HoverTerritory(bool isHovered)
         {
+            if (_isSelected) return;
+            
             _territorySpriteSelected.color = Color.softYellow;
             _territorySpriteSelected.enabled = isHovered; 
-            
         }
         
-        public void SelectTerritory(bool isSelected)
+        private void SelectTerritory(bool isSelected)
         {
             _territorySpriteSelected.color = Color.yellowNice;  
             _territorySpriteSelected.enabled = isSelected;  
+        }
+
+        private void SetNotInteractiveColor()
+        {
+            Color current = _territorySprite.color;
+            Color.RGBToHSV(current, out float h, out float s, out float v);
+            v *= 0.4f; // 40% of original value
+            Color notInteractiveColor = Color.HSVToRGB(h, s, v);
+            SetTerritoryColor(notInteractiveColor);
+        }
+
+        private void ResetTerritoryColor()
+        {
+            SetTerritoryColor(_territoryOriginalColor);
         }
 
     }

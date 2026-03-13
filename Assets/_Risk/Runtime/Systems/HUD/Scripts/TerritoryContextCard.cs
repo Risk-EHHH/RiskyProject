@@ -1,3 +1,5 @@
+using System;
+using Risk.Runtime.Utils;
 using TMPro;
 using UnityEngine;
 
@@ -12,8 +14,18 @@ namespace Risk.Runtime.HUD
         [SerializeField] private TextMeshProUGUI _territoryName;
         [SerializeField] private TextMeshProUGUI _troopsNumber;
         [SerializeField] private TextMeshProUGUI _territoryOwner;
+        [SerializeField] private GameObject _cardActions;
 
-        
+        #region MonoBehaviour
+        private void Awake()
+        {
+            DependencyValidator.NotNull(_territoryName, this);
+            DependencyValidator.NotNull(_troopsNumber, this);
+            DependencyValidator.NotNull(_territoryOwner, this);
+            DependencyValidator.NotNull(_cardActions, this);
+        }
+        #endregion
+
         public struct TerritoryDisplayData
         {
             public string Name;
@@ -32,6 +44,11 @@ namespace Risk.Runtime.HUD
         public void ToggleCard(bool show)
         {
             gameObject.SetActive(show);
+        }
+
+        public void ToggleActions(bool show)
+        {
+            _cardActions.SetActive(show);
         }
 
         private void SetCardPosition(Vector2 dataScreenPosition)

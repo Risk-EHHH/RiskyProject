@@ -100,7 +100,7 @@ namespace Risk.Runtime.GameBoard
 
         private void Start()
         {
-            string[] names = { "Gabriele", "Marco", "Davide" };
+            string[] names = { "Emanuele", "Marco", "Davide" };
             _ownerId = names[Random.Range(0, names.Length)];
         }
         

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Risk.Runtime.BackendCommunication;
+using Risk.Runtime.HUD;
 using Risk.Runtime.Input;
 using Risk.Runtime.Utils;
 using UnityEngine;
@@ -19,7 +20,8 @@ namespace Risk.Runtime.GameBoard
         [SerializeField] private BoardInputManager _boardInputManager;
         [SerializeField] private GameStateModel _gameStateModel;
         [SerializeField] private List<BoardContinent> _boardContinents;
-
+        [SerializeField] private TerritoryContextCard _territoryContextCard;
+        
         private Dictionary<string, BoardTerritory> _territoryViews = new();
         private BoardTerritory _lastSelectedTerritory;
         private BoardTerritory _lastHoveredTerritory;
@@ -39,6 +41,7 @@ namespace Risk.Runtime.GameBoard
             
             _boardInputManager.BoardTerritoryClicked += OnBoardTerritoryClicked;
             _boardInputManager.BoardTerritoryHovered += OnBoardTerritoryHovered;
+            _boardInputManager.BoardTerritoryHoverExited += OnBoardTerritoryHoverExited;
         }
         
         private void OnDisable()
@@ -48,6 +51,8 @@ namespace Risk.Runtime.GameBoard
             
             _boardInputManager.BoardTerritoryClicked -= OnBoardTerritoryClicked;
             _boardInputManager.BoardTerritoryHovered -= OnBoardTerritoryHovered;
+            _boardInputManager.BoardTerritoryHoverExited -= OnBoardTerritoryHoverExited;
+            
         }
 
         private void Start()
@@ -141,6 +146,27 @@ namespace Risk.Runtime.GameBoard
                 _lastHoveredTerritory.IsHovered = false;
             }
             _lastHoveredTerritory = hoveredTerritory;
+            
+            TerritoryContextCard.TerritoryDisplayData data = new()
+            {
+                Name = hoveredTerritory.TerritoryName,
+                OwnerName = hoveredTerritory.OwnerId,
+                TroopCount = hoveredTerritory.TroopCount,
+                ScreenPosition = Camera.main.WorldToScreenPoint(hoveredTerritory.transform.position)
+            };
+
+            _territoryContextCard.Set(data);
+        }
+
+        private void OnBoardTerritoryHoverExited()
+        {
+            if (_lastHoveredTerritory != null)
+            {
+                _lastHoveredTerritory.IsHovered = false;
+                _lastHoveredTerritory = null;            
+            }
+            
+            _territoryContextCard.ToggleCard(false);
         }
         
         private void OnBoardTerritoryClicked(BoardTerritory selectedTerritory)

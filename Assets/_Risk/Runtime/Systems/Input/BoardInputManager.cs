@@ -22,6 +22,8 @@ namespace Risk.Runtime.Input
         
         public event Action<BoardTerritory> BoardTerritoryClicked;
         public event Action<BoardTerritory> BoardTerritoryHovered;
+        public event Action BoardTerritoryHoverExited;
+        
         
         #region MonoBehaviour
             
@@ -62,7 +64,11 @@ namespace Risk.Runtime.Input
             
             Collider2D hit = Physics2D.OverlapPoint(worldPos, _boardLayerMask);
 
-            if (hit == null) return;
+            if (hit == null)
+            {
+                BoardTerritoryHoverExited?.Invoke();    
+                return;
+            }
             BoardTerritory hitTerritory = hit.transform.parent.gameObject.GetComponent<BoardTerritory>();
             BoardTerritoryHovered?.Invoke(hitTerritory);
         }

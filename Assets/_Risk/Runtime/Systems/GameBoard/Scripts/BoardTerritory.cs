@@ -9,14 +9,10 @@ namespace Risk.Runtime.GameBoard
 {
     public class BoardTerritory : MonoBehaviour
     {
-        [Header("Settings")] 
-        [SerializeField] private bool _showName;
-        
         [Header("Data")] 
         [SerializeField] private string _territoryName;
         
         [Header("References")] 
-        [SerializeField] private TMP_Text _nameTMPText;
         [SerializeField] private TMP_Text _troopsNumberTMPText;
         [SerializeField] private SpriteRenderer _territorySprite;
         [SerializeField] private SpriteRenderer _territorySpriteSelected;
@@ -29,6 +25,9 @@ namespace Risk.Runtime.GameBoard
         private bool _isSelected;
         private bool _isInteractive = true;
         private Color _territoryOriginalColor;
+        
+        public string TerritoryName => _territoryName;
+        public string OwnerId => _ownerId;
         
         public int TroopCount
         {
@@ -95,14 +94,16 @@ namespace Risk.Runtime.GameBoard
             DependencyValidator.NotNull(_territorySprite, this);
             DependencyValidator.NotNull(_troopsNumberBackGroundSprite, this);
             DependencyValidator.NotNull(_troopsNumberTMPText, this);
-            DependencyValidator.NotNull(_nameTMPText, this);
             
-            _nameTMPText.gameObject.SetActive(_showName);
-
-            if (!_showName) return;
             _territoryName = gameObject.transform.name;
-            _nameTMPText.text = _territoryName;
         }
+
+        private void Start()
+        {
+            string[] names = { "Emanuele", "Marco", "Davide" };
+            _ownerId = names[Random.Range(0, names.Length)];
+        }
+        
         #endregion
 
         public void SetOriginalColor(Color color)

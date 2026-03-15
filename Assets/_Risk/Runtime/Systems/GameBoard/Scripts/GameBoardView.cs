@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Risk.Runtime.BackendCommunication;
+using Risk.Runtime.HUD;
 using Risk.Runtime.Input;
 using Risk.Runtime.Utils;
 using UnityEngine;
@@ -19,7 +20,9 @@ namespace Risk.Runtime.GameBoard
         [SerializeField] private BoardInputManager _boardInputManager;
         [SerializeField] private GameStateModel _gameStateModel;
         [SerializeField] private List<BoardContinent> _boardContinents;
-
+        [SerializeField] private TerritoryContextCard _selectedTerritoryContextCard;
+        [SerializeField] private TerritoryContextCard _hoveredTerritoryContextCard;
+        
         private Dictionary<string, BoardTerritory> _territoryViews = new();
         private BoardTerritory _lastSelectedTerritory;
         private BoardTerritory _lastHoveredTerritory;
@@ -39,6 +42,7 @@ namespace Risk.Runtime.GameBoard
             
             _boardInputManager.BoardTerritoryClicked += OnBoardTerritoryClicked;
             _boardInputManager.BoardTerritoryHovered += OnBoardTerritoryHovered;
+            _boardInputManager.BoardTerritoryHoverExited += OnBoardTerritoryHoverExited;
         }
         
         private void OnDisable()
@@ -48,6 +52,8 @@ namespace Risk.Runtime.GameBoard
             
             _boardInputManager.BoardTerritoryClicked -= OnBoardTerritoryClicked;
             _boardInputManager.BoardTerritoryHovered -= OnBoardTerritoryHovered;
+            _boardInputManager.BoardTerritoryHoverExited -= OnBoardTerritoryHoverExited;
+            
         }
 
         private void Start()
@@ -141,8 +147,43 @@ namespace Risk.Runtime.GameBoard
                 _lastHoveredTerritory.IsHovered = false;
             }
             _lastHoveredTerritory = hoveredTerritory;
+            
+            if (hoveredTerritory == _lastSelectedTerritory)
+            {
+                _hoveredTerritoryContextCard.ToggleCard(false);
+                return;
+            }
+
+            TerritoryContextCard.TerritoryDisplayData data = new()
+            {
+                Name = hoveredTerritory.TerritoryName,
+                OwnerName = hoveredTerritory.OwnerId,
+                TroopCount = hoveredTerritory.TroopCount,
+                ScreenPosition = Camera.main.WorldToScreenPoint(hoveredTerritory.transform.position)
+            };
+            _hoveredTerritoryContextCard.Set(data);
         }
-        
+
+        private void OnBoardTerritoryHoverExited()
+        {
+            //if (_lastSelectedTerritory != null) return;
+            
+            if (_lastHoveredTerritory != null)
+            {
+                _lastHoveredTerritory.IsHovered = false;
+                _lastHoveredTerritory = null;
+            }
+            _hoveredTerritoryContextCard.ToggleCard(false);
+        }
+
+        /// <summary>
+        /// Handles the logic that occurs when a territory on the game board is clicked by the player.
+        /// This method updates the selection state of the clicked territory while ensuring that any previously
+        /// selected territory is deselected. Additionally, this method updates the display of the territory
+        /// context card with information about the clicked territory and enables the associated actions.
+        /// </summary>
+        /// <param name="selectedTerritory">The <see cref="BoardTerritory"/> instance representing the
+        /// territory that was clicked by the player.</param>
         private void OnBoardTerritoryClicked(BoardTerritory selectedTerritory)
         {
             selectedTerritory.IsSelected = true;
@@ -151,7 +192,25 @@ namespace Risk.Runtime.GameBoard
                 _lastSelectedTerritory.IsSelected = false;
             }
             _lastSelectedTerritory = selectedTerritory;
+            
+
+            UpdateTerritoryContextCard(selectedTerritory);
+            
+            _selectedTerritoryContextCard.ToggleActions(true);
+            _hoveredTerritoryContextCard.ToggleCard(false);
+            
         }
-        
+
+        private void UpdateTerritoryContextCard(BoardTerritory territory)
+        {
+            TerritoryContextCard.TerritoryDisplayData data = new()
+            {
+                Name = territory.TerritoryName,
+                OwnerName = territory.OwnerId,
+                TroopCount = territory.TroopCount,
+                ScreenPosition = Camera.main.WorldToScreenPoint(territory.transform.position)
+            };
+            _selectedTerritoryContextCard.Set(data);
+        }
     }
 }

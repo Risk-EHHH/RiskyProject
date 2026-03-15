@@ -101,7 +101,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5928285070305748015}
   - component: {fileID: 2555156450153418811}
-  - component: {fileID: 1563709932735595875}
   m_Layer: 0
   m_Name: FarBorder
   m_TagString: Untagged
@@ -152,7 +151,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5b9acd624652c864388d3ce798632627, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -176,11 +175,11 @@ LineRenderer:
   m_SortingOrder: 5
   m_MaskInteraction: 0
   m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 1, z: 0}
+  - {x: -0.30008984, y: -1.8412514, z: 0}
+  - {x: -0.072927475, y: -0.782949, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.05
+    widthMultiplier: 0.4
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -229,28 +228,13 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 4
     alignment: 0
-    textureMode: 0
-    textureScale: {x: 1, y: 1}
+    textureMode: 1
+    textureScale: {x: 5, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &1563709932735595875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2456141655793338919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f764424ab450e94ba3f78bcd2acc2be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FarBorderHelper
-  _lineRenderer: {fileID: 2555156450153418811}
-  _startPoint: {fileID: 5080608341304682608}
-  _endPoint: {fileID: 1086561909173691955}
 --- !u!1 &3379286935505952511
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,7 +251,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5080608341304682608
 Transform:
   m_ObjectHideFlags: 0
@@ -359,7 +343,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1086561909173691955
 Transform:
   m_ObjectHideFlags: 0

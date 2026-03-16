@@ -14,6 +14,8 @@ namespace Risk.Runtime.HUD
         [SerializeField] private TextMeshProUGUI _territoryName;
         [SerializeField] private TextMeshProUGUI _troopsNumber;
         [SerializeField] private TextMeshProUGUI _territoryOwner;
+
+        [SerializeField] private bool _hasActions = false;
         [SerializeField] private GameObject _cardActions;
 
         #region MonoBehaviour
@@ -22,7 +24,8 @@ namespace Risk.Runtime.HUD
             DependencyValidator.NotNull(_territoryName, this);
             DependencyValidator.NotNull(_troopsNumber, this);
             DependencyValidator.NotNull(_territoryOwner, this);
-            DependencyValidator.NotNull(_cardActions, this);
+            if (_hasActions)
+                DependencyValidator.NotNull(_cardActions, this);
         }
         #endregion
 
@@ -48,6 +51,7 @@ namespace Risk.Runtime.HUD
 
         public void ToggleActions(bool show)
         {
+            if (!_hasActions) return;
             _cardActions.SetActive(show);
         }
 

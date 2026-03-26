@@ -11,12 +11,29 @@ namespace Risk.Runtime.BackendCommunication
     /// </summary>
     public class GameStateModel : MonoBehaviour
     {
+        public event Action NewGameStarted;
+        [SerializeField] private NewGameMetadata _newGameMetadata;
+
+        public NewGameMetadata NewGameMetadata
+        {
+            get => _newGameMetadata;
+            set
+            {
+                _newGameMetadata = value;
+                NewGameStarted?.Invoke();
+                Debug.Log("New Game Started");
+            }
+        }
+        
+        
+        //----------- OBSOLETE ---------
         public event Action<GameInfo> GameInfoUpdated;
         public event Action<List<PlayerInfo>> PlayersUpdated;
         
         [SerializeField] private GameInfo _gameInfo;
         [SerializeField] private List<PlayerInfo> _players;
 
+        
         public GameInfo GameInfo
         {
             get => _gameInfo;

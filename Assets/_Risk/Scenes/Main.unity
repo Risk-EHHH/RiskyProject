@@ -7409,7 +7409,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Risk.Runtime.BackendCommunication.BackendManager
   _defaultLocalURL: http://127.0.0.1:8000
-  _gameId: 000
 --- !u!4 &768583272
 Transform:
   m_ObjectHideFlags: 0
@@ -7453,6 +7452,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a717efd8a2e0774abf3121108d8fe5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameController
+  _playerNames:
+  - Marco
+  - Davide
+  - Emanuele
 --- !u!1001 &770534969
 PrefabInstance:
   m_ObjectHideFlags: 0

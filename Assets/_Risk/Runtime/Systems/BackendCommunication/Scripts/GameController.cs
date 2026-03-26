@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyUtils.DependencyValidator;
 using UnityEngine;
@@ -6,6 +7,8 @@ namespace Risk.Runtime.BackendCommunication
 {
     public class GameController : MonoBehaviour
     {
+        [SerializeField] private List<string> _playerNames = new List<string>();
+        
         private BackendManager _backendManager;
         private GameStateModel _gameStateModel;
 
@@ -26,15 +29,19 @@ namespace Risk.Runtime.BackendCommunication
         private async Task InitializeGameAsync()
         {
             Debug.Log("Initializing game...");
-        
-            (GameInfo gameInfo, var players) = await _backendManager.GetInitialDataAsync();
-        
-            if (gameInfo != null && players != null)
-            {
-                _gameStateModel.GameInfo = gameInfo;
-                _gameStateModel.Players = players;
-                Debug.Log($"Game initialized! {gameInfo.Territories.Count} territories, {players.Count} players");
-            }
+            
+            
+            NewGameMetadata newGameMetadata = await _backendManager.PostNewGame(_playerNames);
+            _gameStateModel.NewGameMetadata = newGameMetadata;
+            
+            // (GameInfo gameInfo, var players) = await _backendManager.GetInitialDataAsync();
+            //
+            // if (gameInfo != null && players != null)
+            // {
+            //     _gameStateModel.GameInfo = gameInfo;
+            //     _gameStateModel.Players = players;
+            //     Debug.Log($"Game initialized! {gameInfo.Territories.Count} territories, {players.Count} players");
+            // }
         }
     }
 }

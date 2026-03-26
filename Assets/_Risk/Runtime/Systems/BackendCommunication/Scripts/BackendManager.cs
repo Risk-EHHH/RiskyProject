@@ -15,8 +15,39 @@ namespace Risk.Runtime.BackendCommunication
     public class BackendManager : MonoBehaviour
     {
         [SerializeField] private string _defaultLocalURL = "http://127.0.0.1:8000";
-        [SerializeField] private string _gameId = "000";
+        private string _gameId;
 
+        public async Task<NewGameMetadata> PostNewGame(List<string> playerNames)
+        {
+            string url = $"{_defaultLocalURL}/new_game";
+            string playerNamesJson = JsonConvert.SerializeObject(new PlayerNames { player_names = playerNames });
+            Debug.Log($"Posting new game with {playerNamesJson}");
+            using var request = UnityWebRequest.Post(url, playerNamesJson, "application/json");
+            
+            await request.SendWebRequest();
+            
+            if (HasError(request)) 
+                Debug.LogError($"Request failed: {request.error}");
+            
+            var response = JsonConvert.DeserializeObject<ApiResponse<NewGameMetadata>>(request.downloadHandler.text);
+            if (response.status != "success")
+            {
+                Debug.LogError($"PostNewGame failed: {response.message}");
+                return null;
+            }
+            
+            NewGameMetadata newGameMetadata = response.metadata;
+            _gameId = newGameMetadata.game_id;
+            return newGameMetadata;
+        }
+        
+        private class PlayerNames { public List<string> player_names; }
+        
+        private static bool HasError(UnityWebRequest request) 
+            => request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError;
+        
+        //----------- OBSOLETE ---------
+        
         /// <summary>
         /// Gets GameInfo + all PlayerInfo in optimal sequence (1 GameInfo call + N Player calls)
         /// </summary>
@@ -74,7 +105,6 @@ namespace Risk.Runtime.BackendCommunication
             return JsonConvert.DeserializeObject<PlayerInfo>(request.downloadHandler.text);
         }
 
-        private static bool HasError(UnityWebRequest request) 
-            => request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError;
+        
     }
 }

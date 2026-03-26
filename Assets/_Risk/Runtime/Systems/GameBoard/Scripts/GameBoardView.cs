@@ -1,0 +1,215 @@
+using System.Collections.Generic;
+using MyUtils.DependencyValidator;
+using Risk.Runtime.BackendCommunication;
+using Risk.Runtime.HUD;
+using Risk.Runtime.Input;
+using UnityEngine;
+
+
+namespace Risk.Runtime.GameBoard
+{
+    /// <summary>
+    /// Represents the visual component of the game board in the Risk game runtime.
+    /// This class is responsible for handling the rendering and display-related logic
+    /// of the game board elements.
+    /// </summary>
+    public class GameBoardView : MonoBehaviour
+    {
+        [Header("References")]
+        [SerializeField] private BoardInputManager _boardInputManager;
+        [SerializeField] private GameStateModel _gameStateModel;
+        [SerializeField] private List<BoardContinent> _boardContinents;
+        [SerializeField] private TerritoryContextCard _selectedTerritoryContextCard;
+        [SerializeField] private TerritoryContextCard _hoveredTerritoryContextCard;
+        
+        private Dictionary<string, BoardTerritory> _territoryViews = new();
+        private BoardTerritory _lastSelectedTerritory;
+        private BoardTerritory _lastHoveredTerritory;
+        
+        #region MonoBehaviour
+
+        private void Awake()
+        {
+            DependencyValidator.NotNull(_gameStateModel, this);
+            DependencyValidator.ListNotNull(_boardContinents, this);
+        }
+
+        private void OnEnable()
+        {
+            _gameStateModel.GameInfoUpdated += OnGameInfoUpdated;
+            _gameStateModel.PlayersUpdated += OnPlayersUpdated;
+            
+            _boardInputManager.BoardTerritoryClicked += OnBoardTerritoryClicked;
+            _boardInputManager.BoardTerritoryHovered += OnBoardTerritoryHovered;
+            _boardInputManager.BoardTerritoryHoverExited += OnBoardTerritoryHoverExited;
+        }
+        
+        private void OnDisable()
+        {
+            _gameStateModel.GameInfoUpdated -= OnGameInfoUpdated;
+            _gameStateModel.PlayersUpdated -= OnPlayersUpdated;
+            
+            _boardInputManager.BoardTerritoryClicked -= OnBoardTerritoryClicked;
+            _boardInputManager.BoardTerritoryHovered -= OnBoardTerritoryHovered;
+            _boardInputManager.BoardTerritoryHoverExited -= OnBoardTerritoryHoverExited;
+            
+        }
+
+        private void Start()
+        {
+            PopulateTerritories();   
+        }
+        #endregion
+
+        /// <summary>
+        /// Initializes and populates the dictionary of territories (_territoryViews)
+        /// with normalized territory names as keys and corresponding
+        /// <see cref="BoardTerritory"/> instances as values.
+        /// </summary>
+        /// <remarks>
+        /// This method iterates over all <see cref="BoardContinent"/> instances
+        /// in the _boardContinents list and processes each <see cref="BoardTerritory"/>.
+        /// The territory names are normalized to ensure consistent key formatting.
+        /// </remarks>
+        private void PopulateTerritories()
+        {
+            foreach (var boardContinent in _boardContinents)
+            {
+                foreach (var boardTerritory in boardContinent.BoardTerritories)
+                {
+                    string normalizedName = NormalizeTerritoryName(boardTerritory.name);
+                    _territoryViews.Add(normalizedName, boardTerritory);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles updates to the game state by processing the updated game information.
+        /// </summary>
+        /// <param name="gameInfo">The updated <see cref="GameInfo"/> instance containing
+        /// the current game state, including territory and player data.</param>
+        private void OnGameInfoUpdated(GameInfo gameInfo)
+        {
+            UpdateTerritoriesTroops(gameInfo.Territories);
+        }
+
+        /// <summary>
+        /// Handles updates to the list of players and refreshes the related UI components to
+        /// reflect the current game state.
+        /// </summary>
+        /// <param name="players">A list of <see cref="PlayerInfo"/> objects representing
+        /// the updated set of players, including their names, territories, army pools,
+        /// and other relevant data.</param>
+        private void OnPlayersUpdated(List<PlayerInfo> players)
+        {
+            //TODO Update players UI visualization
+        }
+
+        /// <summary>
+        /// Updates the troop count of each territory in the game board view based on the provided game information.
+        /// </summary>
+        /// <param name="gameInfoTerritories">A list of <see cref="Territory"/> objects representing the current state
+        /// of territories, including their troop counts and other data.</param>
+        /// <remarks>
+        /// This method iterates through the provided list of territories, normalizes their names using
+        /// <see cref="NormalizeTerritoryName(string)"/>, and updates the corresponding troop counts in
+        /// the <see cref="BoardTerritory"/> views managed by the game board. Only territories that have
+        /// matching keys in the local dictionary are updated.
+        /// </remarks>
+        private void UpdateTerritoriesTroops(List<Territory> gameInfoTerritories)
+        {
+            foreach (Territory territory in gameInfoTerritories)
+            {
+                string backendName = NormalizeTerritoryName(territory.Name);
+                if (_territoryViews.TryGetValue(backendName, out var territoryView))
+                {
+                    territoryView.TroopCount = territory.Armies;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Normalizes the given territory name by removing all spaces and converting it to lowercase.
+        /// </summary>
+        /// <param name="territoryName"></param>
+        /// <returns></returns>
+        private static string NormalizeTerritoryName(string territoryName)
+        {
+            return territoryName.Replace(" ", "").ToLower();
+        }
+        
+        private void OnBoardTerritoryHovered(BoardTerritory hoveredTerritory)
+        {
+            hoveredTerritory.IsHovered = true;
+            if (_lastHoveredTerritory != null && _lastHoveredTerritory != hoveredTerritory)
+            {
+                _lastHoveredTerritory.IsHovered = false;
+            }
+            _lastHoveredTerritory = hoveredTerritory;
+            
+            if (hoveredTerritory == _lastSelectedTerritory)
+            {
+                _hoveredTerritoryContextCard.ToggleCard(false);
+                return;
+            }
+
+            TerritoryContextCard.TerritoryDisplayData data = new()
+            {
+                Name = hoveredTerritory.TerritoryName,
+                OwnerName = hoveredTerritory.OwnerId,
+                TroopCount = hoveredTerritory.TroopCount,
+                ScreenPosition = Camera.main.WorldToScreenPoint(hoveredTerritory.transform.position)
+            };
+            _hoveredTerritoryContextCard.Set(data);
+        }
+
+        private void OnBoardTerritoryHoverExited()
+        {
+            //if (_lastSelectedTerritory != null) return;
+            
+            if (_lastHoveredTerritory != null)
+            {
+                _lastHoveredTerritory.IsHovered = false;
+                _lastHoveredTerritory = null;
+            }
+            _hoveredTerritoryContextCard.ToggleCard(false);
+        }
+
+        /// <summary>
+        /// Handles the logic that occurs when a territory on the game board is clicked by the player.
+        /// This method updates the selection state of the clicked territory while ensuring that any previously
+        /// selected territory is deselected. Additionally, this method updates the display of the territory
+        /// context card with information about the clicked territory and enables the associated actions.
+        /// </summary>
+        /// <param name="selectedTerritory">The <see cref="BoardTerritory"/> instance representing the
+        /// territory that was clicked by the player.</param>
+        private void OnBoardTerritoryClicked(BoardTerritory selectedTerritory)
+        {
+            selectedTerritory.IsSelected = true;
+            if (_lastSelectedTerritory != null && _lastSelectedTerritory != selectedTerritory)
+            {
+                _lastSelectedTerritory.IsSelected = false;
+            }
+            _lastSelectedTerritory = selectedTerritory;
+            
+
+            UpdateTerritoryContextCard(selectedTerritory);
+            
+            _selectedTerritoryContextCard.ToggleActions(true);
+            _hoveredTerritoryContextCard.ToggleCard(false);
+            
+        }
+
+        private void UpdateTerritoryContextCard(BoardTerritory territory)
+        {
+            TerritoryContextCard.TerritoryDisplayData data = new()
+            {
+                Name = territory.TerritoryName,
+                OwnerName = territory.OwnerId,
+                TroopCount = territory.TroopCount,
+                ScreenPosition = Camera.main.WorldToScreenPoint(territory.transform.position)
+            };
+            _selectedTerritoryContextCard.Set(data);
+        }
+    }
+}

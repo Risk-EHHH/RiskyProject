@@ -22,7 +22,7 @@ namespace Risk.Runtime.GameBoard
         [SerializeField] private TerritoryContextCard _selectedTerritoryContextCard;
         [SerializeField] private TerritoryContextCard _hoveredTerritoryContextCard;
         
-        private Dictionary<string, BoardTerritory> _territoryViews = new();
+        private readonly Dictionary<string, BoardTerritory> _territoryViews = new();
         private BoardTerritory _lastSelectedTerritory;
         private BoardTerritory _lastHoveredTerritory;
         
@@ -36,8 +36,8 @@ namespace Risk.Runtime.GameBoard
 
         private void OnEnable()
         {
-            _gameStateModel.GameInfoUpdated += OnGameInfoUpdated;
-            _gameStateModel.PlayersUpdated += OnPlayersUpdated;
+            _gameStateModel.BoardInfoUpdated += OnBoardInfoUpdated;
+            _gameStateModel.TerritoriesStatesUpdated += OnTerritoriesStatesUpdated;
             
             _boardInputManager.BoardTerritoryClicked += OnBoardTerritoryClicked;
             _boardInputManager.BoardTerritoryHovered += OnBoardTerritoryHovered;
@@ -46,8 +46,9 @@ namespace Risk.Runtime.GameBoard
         
         private void OnDisable()
         {
-            _gameStateModel.GameInfoUpdated -= OnGameInfoUpdated;
-            _gameStateModel.PlayersUpdated -= OnPlayersUpdated;
+            _gameStateModel.BoardInfoUpdated -= OnBoardInfoUpdated;
+            _gameStateModel.TerritoriesStatesUpdated -= OnTerritoriesStatesUpdated;
+            
             
             _boardInputManager.BoardTerritoryClicked -= OnBoardTerritoryClicked;
             _boardInputManager.BoardTerritoryHovered -= OnBoardTerritoryHovered;
@@ -62,7 +63,7 @@ namespace Risk.Runtime.GameBoard
         #endregion
 
         /// <summary>
-        /// Initializes and populates the dictionary of territories (_territoryViews)
+        /// Initializes and populates the dictionary of board territories (_territoryViews)
         /// with normalized territory names as keys and corresponding
         /// <see cref="BoardTerritory"/> instances as values.
         /// </summary>
@@ -83,50 +84,37 @@ namespace Risk.Runtime.GameBoard
             }
         }
 
-        /// <summary>
-        /// Handles updates to the game state by processing the updated game information.
-        /// </summary>
-        /// <param name="gameInfo">The updated <see cref="GameInfo"/> instance containing
-        /// the current game state, including territory and player data.</param>
-        private void OnGameInfoUpdated(GameInfo gameInfo)
+        // Called only at the beginning of the game
+        private void OnBoardInfoUpdated(BoardInfoMetadata boardInfo)
         {
-            UpdateTerritoriesTroops(gameInfo.Territories);
-        }
-
-        /// <summary>
-        /// Handles updates to the list of players and refreshes the related UI components to
-        /// reflect the current game state.
-        /// </summary>
-        /// <param name="players">A list of <see cref="PlayerInfo"/> objects representing
-        /// the updated set of players, including their names, territories, army pools,
-        /// and other relevant data.</param>
-        private void OnPlayersUpdated(List<PlayerInfo> players)
-        {
-            //TODO Update players UI visualization
-        }
-
-        /// <summary>
-        /// Updates the troop count of each territory in the game board view based on the provided game information.
-        /// </summary>
-        /// <param name="gameInfoTerritories">A list of <see cref="Territory"/> objects representing the current state
-        /// of territories, including their troop counts and other data.</param>
-        /// <remarks>
-        /// This method iterates through the provided list of territories, normalizes their names using
-        /// <see cref="NormalizeTerritoryName(string)"/>, and updates the corresponding troop counts in
-        /// the <see cref="BoardTerritory"/> views managed by the game board. Only territories that have
-        /// matching keys in the local dictionary are updated.
-        /// </remarks>
-        private void UpdateTerritoriesTroops(List<Territory> gameInfoTerritories)
-        {
-            foreach (Territory territory in gameInfoTerritories)
+            foreach (Continent continent in boardInfo.Continents)
             {
-                string backendName = NormalizeTerritoryName(territory.Name);
-                if (_territoryViews.TryGetValue(backendName, out var territoryView))
+                foreach (Territory territory in continent.Territories)
                 {
-                    territoryView.TroopCount = territory.Armies;
+                    string normalizedName = NormalizeTerritoryName(territory.Name);
+                    if (_territoryViews.TryGetValue(normalizedName, out BoardTerritory territoryView))
+                    {
+                        territoryView.TroopCount = territory.Armies;
+                        territoryView.OwnerId = territory.Owner;
+                    }
                 }
             }
         }
+        
+        // Called every turn
+        private void OnTerritoriesStatesUpdated(Dictionary<string, TerritoryState> territoriesStates)
+        {
+            foreach ((string territoryName, TerritoryState state) in territoriesStates)
+            {
+                string normalizedName = NormalizeTerritoryName(territoryName);
+                if (_territoryViews.TryGetValue(normalizedName, out BoardTerritory territoryView))
+                {
+                    territoryView.TroopCount = state.Armies;
+                    territoryView.OwnerId = state.Owner;
+                }
+            }
+        }
+        
 
         /// <summary>
         /// Normalizes the given territory name by removing all spaces and converting it to lowercase.

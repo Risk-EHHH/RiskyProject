@@ -12,8 +12,15 @@ namespace Risk.Runtime.BackendCommunication
     public class GameStateModel : MonoBehaviour
     {
         public event Action NewGameStarted;
+        public event Action<BoardInfoMetadata> BoardInfoUpdated;
+        public event Action<Dictionary<string, TerritoryState>> TerritoriesStatesUpdated;
+        
         [SerializeField] private NewGameMetadata _newGameMetadata;
-
+        [SerializeField] private BoardInfoMetadata _boardInfoMetadata;
+        
+        private Dictionary<string, TerritoryState> _territoriesStates = new();
+        
+        
         public NewGameMetadata NewGameMetadata
         {
             get => _newGameMetadata;
@@ -25,34 +32,54 @@ namespace Risk.Runtime.BackendCommunication
             }
         }
         
+        public BoardInfoMetadata BoardInfoMetadata
+        {
+            get => _boardInfoMetadata;
+            set
+            {
+                _boardInfoMetadata = value;
+                BoardInfoUpdated?.Invoke(_boardInfoMetadata);
+            }
+        }
+
+        public Dictionary<string, TerritoryState> TerritoryStates
+        {
+            get => _territoriesStates;
+            set
+            {
+                _territoriesStates = value;
+                TerritoriesStatesUpdated?.Invoke(_territoriesStates);
+            }
+        }
+        
         
         //----------- OBSOLETE ---------
-        public event Action<GameInfo> GameInfoUpdated;
-        public event Action<List<PlayerInfo>> PlayersUpdated;
-        
-        [SerializeField] private GameInfo _gameInfo;
-        [SerializeField] private List<PlayerInfo> _players;
-
-        
-        public GameInfo GameInfo
-        {
-            get => _gameInfo;
-            set
-            {
-                _gameInfo = value;
-                GameInfoUpdated?.Invoke(_gameInfo);
-            }
-        }
-        
-        
-        public List<PlayerInfo> Players { 
-            get => _players;
-            set
-            {
-                _players = value;
-                PlayersUpdated?.Invoke(_players);
-            }
-        }
+        // public event Action<GameInfo> GameInfoUpdated;
+        // public event Action<List<PlayerInfo>> PlayersUpdated;
+        //
+        // [SerializeField] private GameInfo _gameInfo;
+        // [SerializeField] private List<PlayerInfo> _players;
+        //
+        //
+        // public GameInfo GameInfo
+        // {
+        //     get => _gameInfo;
+        //     set
+        //     {
+        //         _gameInfo = value;
+        //         GameInfoUpdated?.Invoke(_gameInfo);
+        //     }
+        // }
+        //
+        //
+        // public List<PlayerInfo> Players { 
+        //     get => _players;
+        //     set
+        //     {
+        //         _players = value;
+        //         PlayersUpdated?.Invoke(_players);
+        //     }
+        // }
     }
     
 }

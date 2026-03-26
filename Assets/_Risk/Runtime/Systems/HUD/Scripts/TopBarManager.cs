@@ -18,10 +18,10 @@ namespace Risk.Runtime.HUD
         
         #endregion
 
-        public void AddPlayerInfo(PlayerInfo playerInfo)
-        {
-            var playerInfoCard = Instantiate(_playerInfoCardPrefab, transform);
-            playerInfoCard.UpdatePlayerInfo(playerInfo);
-        }
+        // public void AddPlayerInfo(PlayerInfo playerInfo)
+        // {
+        //     var playerInfoCard = Instantiate(_playerInfoCardPrefab, transform);
+        //     playerInfoCard.UpdatePlayerInfo(playerInfo);
+        // }
     }
 }

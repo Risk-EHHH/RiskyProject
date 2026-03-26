@@ -20,22 +20,22 @@ namespace Risk.Runtime.HUD
 
         private void OnEnable()
         {
-            _gameStateModel.PlayersUpdated += OnPlayersUpdated;
+            // _gameStateModel.PlayersUpdated += OnPlayersUpdated;
         }
         
         private void OnDisable()
         {
-            _gameStateModel.PlayersUpdated -= OnPlayersUpdated;
+            // _gameStateModel.PlayersUpdated -= OnPlayersUpdated;
         }
 
         #endregion
 
-        private void OnPlayersUpdated(List<PlayerInfo> playerInfos)
-        {
-            foreach (var playerInfo in playerInfos)
-            {
-                _topBarManager.AddPlayerInfo(playerInfo);
-            }
-        }
+        // private void OnPlayersUpdated(List<PlayerInfo> playerInfos)
+        // {
+        //     foreach (var playerInfo in playerInfos)
+        //     {
+        //         _topBarManager.AddPlayerInfo(playerInfo);
+        //     }
+        // }
     }
 }

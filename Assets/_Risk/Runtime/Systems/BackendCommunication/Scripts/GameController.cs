@@ -33,15 +33,9 @@ namespace Risk.Runtime.BackendCommunication
             
             NewGameMetadata newGameMetadata = await _backendManager.PostNewGame(_playerNames);
             _gameStateModel.NewGameMetadata = newGameMetadata;
+            _gameStateModel.BoardInfoMetadata = await _backendManager.GetBoardInfo();
             
-            // (GameInfo gameInfo, var players) = await _backendManager.GetInitialDataAsync();
-            //
-            // if (gameInfo != null && players != null)
-            // {
-            //     _gameStateModel.GameInfo = gameInfo;
-            //     _gameStateModel.Players = players;
-            //     Debug.Log($"Game initialized! {gameInfo.Territories.Count} territories, {players.Count} players");
-            // }
+            
         }
     }
 }

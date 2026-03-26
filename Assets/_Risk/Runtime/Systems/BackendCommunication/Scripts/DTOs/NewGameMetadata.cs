@@ -1,10 +1,12 @@
 using System;
+using Newtonsoft.Json;
 
 namespace Risk.Runtime.BackendCommunication
 {
     [Serializable]
     public class NewGameMetadata
     {
-        public string game_id;
+        [JsonProperty("game_id")]
+        public string GameID;
     }
 }

@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -16,7 +13,24 @@ namespace Risk.Runtime.BackendCommunication
     {
         [SerializeField] private string _defaultLocalURL = "http://127.0.0.1:8000";
         private string _gameId;
-
+        
+        private class PlayerNames
+        {
+            [JsonProperty("player_names")]
+            public List<string> Names;
+        }
+        
+        /// <summary>
+        /// Called once at the beginning of the game to create a new game session.
+        /// Creates a new game on the backend server with the provided list of player names.
+        /// This method sends a POST request to initialize a new game session and retrieves the associated game metadata.
+        /// </summary>
+        /// <param name="playerNames">A list of player names to be included in the new game session.</param>
+        /// <returns>
+        /// An instance of <see cref="NewGameMetadata"/> containing information about the newly created game session,
+        /// including its unique game ID.
+        /// Returns null if the request fails or if the backend response indicates an error.
+        /// </returns>
         public async Task<NewGameMetadata> PostNewGame(List<string> playerNames)
         {
             string url = $"{_defaultLocalURL}/new_game";
@@ -41,13 +55,18 @@ namespace Risk.Runtime.BackendCommunication
             return newGameMetadata;
         }
 
-        private class PlayerNames
-        {
-            [JsonProperty("player_names")]
-            public List<string> Names;
-        }
 
-        public async Task<BoardInfoMetadata> GetBoardInfo()
+        /// <summary>
+        /// Called once at the beginning of the game to setup the board.
+        /// Retrieves the current board information, including details about continents and other game-related metadata.
+        /// This method sends a GET request to the backend server using the active game ID to fetch the board state.
+        /// </summary>
+        /// <returns>
+        /// An instance of <see cref="BoardInfo"/> containing data about the game's board configuration,
+        /// including continents and their composition.
+        /// Returns null if the request fails or if the response indicates an error.
+        /// </returns>
+        public async Task<BoardInfo> GetBoardInfo()
         {
             string url = $"{_defaultLocalURL}/{_gameId}/get_board_info";
             using UnityWebRequest request = UnityWebRequest.Get(url);
@@ -57,7 +76,7 @@ namespace Risk.Runtime.BackendCommunication
             if (HasError(request)) 
                 Debug.LogError($"Request failed: {request.error}");
             
-            var response = JsonConvert.DeserializeObject<ApiResponse<BoardInfoMetadata>>(request.downloadHandler.text);
+            var response = JsonConvert.DeserializeObject<ApiResponse<BoardInfo>>(request.downloadHandler.text);
             if (response.Status != "success")
             {
                 Debug.LogError($"GetBoardInfo failed: {response.Message}");
@@ -66,8 +85,18 @@ namespace Risk.Runtime.BackendCommunication
             
             return response.Metadata;
         }
-        
-        public async Task<Dictionary<string, TerritoryState>> GetTerritoriesInfo()
+
+        /// <summary>
+        /// Called every time there is a change in the board state (probably every turn phase!) to get the territories info after player actions.
+        /// Retrieves information about all territories, including ownership and the number of armies stationed.
+        /// The data is fetched from the backend server based on the current game context.
+        /// </summary>
+        /// <returns>
+        /// A dictionary where the keys are territory identifiers as strings and the values are
+        /// <see cref="TerritoryInfo"/> objects containing details about the territories.
+        /// Returns null if the request fails or if an error occurs.
+        /// </returns>
+        public async Task<Dictionary<string, TerritoryInfo>> GetTerritoriesInfo()
         {
             string url = $"{_defaultLocalURL}/{_gameId}/get_territories_info";
             using UnityWebRequest request = UnityWebRequest.Get(url);
@@ -77,7 +106,7 @@ namespace Risk.Runtime.BackendCommunication
             if (HasError(request))
                 Debug.LogError($"Request failed: {request.error}");
     
-            var response = JsonConvert.DeserializeObject<ApiResponse<Dictionary<string, TerritoryState>>>(request.downloadHandler.text);
+            var response = JsonConvert.DeserializeObject<ApiResponse<Dictionary<string, TerritoryInfo>>>(request.downloadHandler.text);
             if (response.Status != "success")
             {
                 Debug.LogError($"GetTerritoriesInfo failed: {response.Message}");
@@ -86,10 +115,39 @@ namespace Risk.Runtime.BackendCommunication
     
             return response.Metadata;
         }
+
+        /// <summary>
+        /// Retrieves information about all players in the current game, including their names, territories, armies,
+        /// and game status details such as whether they are eliminated or have won.
+        /// The data is fetched from the backend server based on the current game context.
+        /// </summary>
+        /// <returns>
+        /// A dictionary where the keys are player identifiers as strings, and the values are
+        /// <see cref="PlayerInfo"/> objects containing details about each player.
+        /// Returns null if the request fails, an error occurs, or the response indicates a failure.
+        /// </returns>
+        public async Task<Dictionary<string, PlayerInfo>> GetPlayersInfo()
+        {
+            string url = $"{_defaultLocalURL}/{_gameId}/get_players_info";
+            using UnityWebRequest request = UnityWebRequest.Get(url);
+    
+            await request.SendWebRequest();
+    
+            if (HasError(request))
+                Debug.LogError($"Request failed: {request.error}");
+            
+            var response = JsonConvert.DeserializeObject<ApiResponse<Dictionary<string, PlayerInfo>>>(request.downloadHandler.text);
+            if (response.Status != "success")
+            {
+                Debug.LogError($"GetPlayersInfo failed: {response.Message}");
+                return null;
+            }
+
+            return response.Metadata;
+        }
         
         
         private static bool HasError(UnityWebRequest request) 
             => request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError;
-        
     }
 }

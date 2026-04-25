@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyUtils.DependencyValidator;
@@ -26,6 +27,20 @@ namespace Risk.Runtime.BackendCommunication
             await InitializeGameAsync();
         }
 
+        private void Update()
+        {
+            if (UnityEngine.Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                MockChangeTurn();
+            }
+            
+            if (UnityEngine.Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                MockChangeTurnPhase();
+            }
+            
+        }
+
         private async Task InitializeGameAsync()
         {
             Debug.Log("Initializing game...");
@@ -33,9 +48,22 @@ namespace Risk.Runtime.BackendCommunication
             
             NewGameMetadata newGameMetadata = await _backendManager.PostNewGame(_playerNames);
             _gameStateModel.NewGameMetadata = newGameMetadata;
-            _gameStateModel.BoardInfoMetadata = await _backendManager.GetBoardInfo();
+            _gameStateModel.BoardInfo = await _backendManager.GetBoardInfo();
+            _gameStateModel.PlayersInfo = await _backendManager.GetPlayersInfo();
+        }
+
+        private void MockChangeTurn()
+        {
+            //TODO Mock change turn
             
+        }
+
+        private async void MockChangeTurnPhase()
+        {
+            _gameStateModel.TerritoriesInfo = await _backendManager.GetTerritoriesInfo();
+            //TODO Mock change turn phase
             
+            // (at some point the change of phase will trigger a change turn)
         }
     }
 }

@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace Risk.Runtime.BackendCommunication
 {
     [Serializable]
-    public class BoardInfoMetadata
+    public class BoardInfo
     {
         [JsonProperty("continents")]
         public List<Continent> Continents;

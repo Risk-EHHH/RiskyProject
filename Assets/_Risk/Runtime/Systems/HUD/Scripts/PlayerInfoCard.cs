@@ -27,11 +27,11 @@ namespace Risk.Runtime.HUD
         #endregion
 
 
-        // public void UpdatePlayerInfo(PlayerInfo playerInfo)
-        // {
-        //     _playerName.text = playerInfo.Name;
-        //     _playerArmyPool.text = $"Troops: {playerInfo.ArmyPool.ToString()}";
-        //     _cardBackground.color = ColorUtils.FromColorName(playerInfo.Color);
-        // }
+        public void UpdatePlayerInfo(PlayerInfo playerInfo)
+        {
+            _playerName.text = playerInfo.Name;
+            _playerArmyPool.text = $"Troops: {playerInfo.ArmyPool.ToString()}";
+            _cardBackground.color = ColorUtils.FromColorName(playerInfo.Color);
+        }
     }
 }

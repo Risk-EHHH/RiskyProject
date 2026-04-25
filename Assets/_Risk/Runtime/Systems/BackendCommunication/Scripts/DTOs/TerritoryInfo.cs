@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Risk.Runtime.BackendCommunication
 {
     [Serializable]
-    public class TerritoryState
+    public class TerritoryInfo
     {
         [JsonProperty("owner")]
         public string Owner;

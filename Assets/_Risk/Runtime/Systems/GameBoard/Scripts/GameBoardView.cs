@@ -85,7 +85,7 @@ namespace Risk.Runtime.GameBoard
         }
 
         // Called only at the beginning of the game
-        private void OnBoardInfoUpdated(BoardInfoMetadata boardInfo)
+        private void OnBoardInfoUpdated(BoardInfo boardInfo)
         {
             foreach (Continent continent in boardInfo.Continents)
             {
@@ -102,9 +102,9 @@ namespace Risk.Runtime.GameBoard
         }
         
         // Called every turn
-        private void OnTerritoriesStatesUpdated(Dictionary<string, TerritoryState> territoriesStates)
+        private void OnTerritoriesStatesUpdated(Dictionary<string, TerritoryInfo> territoriesStates)
         {
-            foreach ((string territoryName, TerritoryState state) in territoriesStates)
+            foreach ((string territoryName, TerritoryInfo state) in territoriesStates)
             {
                 string normalizedName = NormalizeTerritoryName(territoryName);
                 if (_territoryViews.TryGetValue(normalizedName, out BoardTerritory territoryView))

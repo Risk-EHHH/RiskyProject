@@ -12,14 +12,16 @@ namespace Risk.Runtime.BackendCommunication
     public class GameStateModel : MonoBehaviour
     {
         public event Action NewGameStarted;
-        public event Action<BoardInfoMetadata> BoardInfoUpdated;
-        public event Action<Dictionary<string, TerritoryState>> TerritoriesStatesUpdated;
+        public event Action<BoardInfo> BoardInfoUpdated;
+        public event Action<Dictionary<string, TerritoryInfo>> TerritoriesStatesUpdated;
+        public event Action<Dictionary<string, PlayerInfo>> PlayersInfoUpdated;
+        
         
         [SerializeField] private NewGameMetadata _newGameMetadata;
-        [SerializeField] private BoardInfoMetadata _boardInfoMetadata;
+        [SerializeField] private BoardInfo _boardInfo;
         
-        private Dictionary<string, TerritoryState> _territoriesStates = new();
-        
+        private Dictionary<string, TerritoryInfo> _territoriesInfo = new();
+        private Dictionary<string, PlayerInfo> _playersInfo = new();
         
         public NewGameMetadata NewGameMetadata
         {
@@ -32,54 +34,35 @@ namespace Risk.Runtime.BackendCommunication
             }
         }
         
-        public BoardInfoMetadata BoardInfoMetadata
+        public BoardInfo BoardInfo
         {
-            get => _boardInfoMetadata;
+            get => _boardInfo;
             set
             {
-                _boardInfoMetadata = value;
-                BoardInfoUpdated?.Invoke(_boardInfoMetadata);
+                _boardInfo = value;
+                BoardInfoUpdated?.Invoke(_boardInfo);
             }
         }
 
-        public Dictionary<string, TerritoryState> TerritoryStates
+        public Dictionary<string, TerritoryInfo> TerritoriesInfo
         {
-            get => _territoriesStates;
+            get => _territoriesInfo;
             set
             {
-                _territoriesStates = value;
-                TerritoriesStatesUpdated?.Invoke(_territoriesStates);
+                _territoriesInfo = value;
+                TerritoriesStatesUpdated?.Invoke(_territoriesInfo);
             }
         }
         
-        
-        //----------- OBSOLETE ---------
-        // public event Action<GameInfo> GameInfoUpdated;
-        // public event Action<List<PlayerInfo>> PlayersUpdated;
-        //
-        // [SerializeField] private GameInfo _gameInfo;
-        // [SerializeField] private List<PlayerInfo> _players;
-        //
-        //
-        // public GameInfo GameInfo
-        // {
-        //     get => _gameInfo;
-        //     set
-        //     {
-        //         _gameInfo = value;
-        //         GameInfoUpdated?.Invoke(_gameInfo);
-        //     }
-        // }
-        //
-        //
-        // public List<PlayerInfo> Players { 
-        //     get => _players;
-        //     set
-        //     {
-        //         _players = value;
-        //         PlayersUpdated?.Invoke(_players);
-        //     }
-        // }
+        public Dictionary<string, PlayerInfo> PlayersInfo
+        {
+            get => _playersInfo;
+            set
+            {
+                _playersInfo = value;
+                PlayersInfoUpdated?.Invoke(_playersInfo);
+            }
+        }
     }
     
 }

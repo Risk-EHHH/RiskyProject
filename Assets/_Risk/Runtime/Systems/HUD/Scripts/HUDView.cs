@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using MyUtils.DependencyValidator;
-using Risk.Runtime.BackendCommunication;
+using Risk.Runtime.GameState;
 using UnityEngine;
 
 namespace Risk.Runtime.HUD
 {
     public class HUDView : MonoBehaviour
     {
-        [SerializeField] GameStateModel _gameStateModel;
-        [SerializeField] TopBarManager _topBarManager;
+        [SerializeField] private GameStateModel _gameStateModel;
+        [SerializeField] private TopBarManager _topBarManager;
 
         #region MonoBehaviour
 
@@ -20,26 +20,21 @@ namespace Risk.Runtime.HUD
 
         private void OnEnable()
         {
-            _gameStateModel.PlayersInfoUpdated += OnPlayersInfoUpdated;
+            _gameStateModel.PlayersUpdated += OnPlayersUpdated;
         }
         
         private void OnDisable()
         {
-            _gameStateModel.PlayersInfoUpdated -= OnPlayersInfoUpdated;
+            _gameStateModel.PlayersUpdated -= OnPlayersUpdated;
         }
 
         #endregion
 
-        private void OnPlayersInfoUpdated(Dictionary<string, PlayerInfo> playerInfos)
+        private void OnPlayersUpdated(List<PlayerState> players)
         {
-            // foreach (var playerInfo in playerInfos)
-            // {
-            //     _topBarManager.AddPlayerInfo(playerInfo);
-            // }
-            
-            foreach (var playerInfo in playerInfos.Values)
+            foreach (PlayerState player in players)
             {
-                _topBarManager.AddPlayerInfo(playerInfo);
+                _topBarManager.AddPlayerInfo(player);
             }
         }
     }

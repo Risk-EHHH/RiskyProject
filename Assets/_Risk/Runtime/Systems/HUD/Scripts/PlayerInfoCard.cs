@@ -1,5 +1,5 @@
 using MyUtils.DependencyValidator;
-using Risk.Runtime.BackendCommunication;
+using Risk.Runtime.GameState;
 using Risk.Runtime.Utils;
 using TMPro;
 using UnityEngine;
@@ -27,11 +27,11 @@ namespace Risk.Runtime.HUD
         #endregion
 
 
-        public void UpdatePlayerInfo(PlayerInfo playerInfo)
+        public void UpdatePlayerInfo(PlayerState player)
         {
-            _playerName.text = playerInfo.Name;
-            _playerArmyPool.text = $"Troops: {playerInfo.ArmyPool.ToString()}";
-            _cardBackground.color = ColorUtils.FromColorName(playerInfo.Color);
+            _playerName.text = player.Name;
+            _playerArmyPool.text = $"Troops: {player.ArmyPool.ToString()}";
+            _cardBackground.color = ColorUtils.FromColorName(player.Color);
         }
     }
 }

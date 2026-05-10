@@ -2,67 +2,70 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Risk.Runtime.BackendCommunication
+namespace Risk.Runtime.GameState
 {
-    /// <summary>
-    /// This class is responsible for local mirroring of the current Game Data from the web Python backend.
-    /// This class is the Model of MVC pattern to sync the UI with the Game State.
-    /// The data present in this class needs to be updated and synced with the backend every time the backend gets updated 
-    /// </summary>
     public class GameStateModel : MonoBehaviour
     {
-        public event Action NewGameStarted;
-        public event Action<BoardInfo> BoardInfoUpdated;
-        public event Action<Dictionary<string, TerritoryInfo>> TerritoriesStatesUpdated;
-        public event Action<Dictionary<string, PlayerInfo>> PlayersInfoUpdated;
-        
-        
-        [SerializeField] private Game _game;
-        [SerializeField] private BoardInfo _boardInfo;
-        
-        private Dictionary<string, TerritoryInfo> _territoriesInfo = new();
-        private Dictionary<string, PlayerInfo> _playersInfo = new();
-        
-        public Game Game
+        public event Action<GameState> GameStarted;
+        public event Action<BoardState> BoardUpdated;
+        public event Action<List<TerritoryState>> TerritoriesUpdated;
+        public event Action<List<PlayerState>> PlayersUpdated;
+        public event Action<SecretPlayerState> SecretPlayerUpdated;
+
+        [SerializeField] private GameState _game;
+        [SerializeField] private BoardState _board;
+        [SerializeField] private List<TerritoryState> _territories = new();
+        [SerializeField] private List<PlayerState> _players = new();
+        [SerializeField] private SecretPlayerState _secretPlayer;
+
+        public GameState Game
         {
             get => _game;
             set
             {
                 _game = value;
-                NewGameStarted?.Invoke();
-                Debug.Log("New Game Started");
-            }
-        }
-        
-        public BoardInfo BoardInfo
-        {
-            get => _boardInfo;
-            set
-            {
-                _boardInfo = value;
-                BoardInfoUpdated?.Invoke(_boardInfo);
+                GameStarted?.Invoke(_game);
             }
         }
 
-        public Dictionary<string, TerritoryInfo> TerritoriesInfo
+        public BoardState Board
         {
-            get => _territoriesInfo;
+            get => _board;
             set
             {
-                _territoriesInfo = value;
-                TerritoriesStatesUpdated?.Invoke(_territoriesInfo);
+                _board = value;
+                BoardUpdated?.Invoke(_board);
             }
         }
-        
-        public Dictionary<string, PlayerInfo> PlayersInfo
+
+        public List<TerritoryState> Territories
         {
-            get => _playersInfo;
+            get => _territories;
             set
             {
-                _playersInfo = value;
-                PlayersInfoUpdated?.Invoke(_playersInfo);
+                _territories = value;
+                TerritoriesUpdated?.Invoke(_territories);
+            }
+        }
+
+        public List<PlayerState> Players
+        {
+            get => _players;
+            set
+            {
+                _players = value;
+                PlayersUpdated?.Invoke(_players);
+            }
+        }
+
+        public SecretPlayerState SecretPlayer
+        {
+            get => _secretPlayer;
+            set
+            {
+                _secretPlayer = value;
+                SecretPlayerUpdated?.Invoke(_secretPlayer);
             }
         }
     }
-    
 }

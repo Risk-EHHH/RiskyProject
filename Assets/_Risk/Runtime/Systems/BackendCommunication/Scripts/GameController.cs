@@ -46,8 +46,8 @@ namespace Risk.Runtime.BackendCommunication
             Debug.Log("Initializing game...");
             
             
-            NewGameMetadata newGameMetadata = await _backendManager.PostNewGame(_playerNames);
-            _gameStateModel.NewGameMetadata = newGameMetadata;
+            Game game = await _backendManager.PostNewGame(_playerNames);
+            _gameStateModel.Game = game;
             _gameStateModel.BoardInfo = await _backendManager.GetBoardInfo();
             _gameStateModel.PlayersInfo = await _backendManager.GetPlayersInfo();
         }

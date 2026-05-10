@@ -27,11 +27,11 @@ namespace Risk.Runtime.BackendCommunication
         /// </summary>
         /// <param name="playerNames">A list of player names to be included in the new game session.</param>
         /// <returns>
-        /// An instance of <see cref="NewGameMetadata"/> containing information about the newly created game session,
+        /// An instance of <see cref="Game"/> containing information about the newly created game session,
         /// including its unique game ID.
         /// Returns null if the request fails or if the backend response indicates an error.
         /// </returns>
-        public async Task<NewGameMetadata> PostNewGame(List<string> playerNames)
+        public async Task<Game> PostNewGame(List<string> playerNames)
         {
             string url = $"{_defaultLocalURL}/new_game";
             string playerNamesJson = JsonConvert.SerializeObject(new PlayerNames { Names = playerNames });
@@ -43,16 +43,16 @@ namespace Risk.Runtime.BackendCommunication
             if (HasError(request)) 
                 Debug.LogError($"Request failed: {request.error}");
             
-            var response = JsonConvert.DeserializeObject<ApiResponse<NewGameMetadata>>(request.downloadHandler.text);
+            var response = JsonConvert.DeserializeObject<ApiResponse<Game>>(request.downloadHandler.text);
             if (response.Status != "success")
             {
                 Debug.LogError($"PostNewGame failed: {response.Message}");
                 return null;
             }
             
-            NewGameMetadata newGameMetadata = response.Metadata;
-            _gameId = newGameMetadata.GameID;
-            return newGameMetadata;
+            Game game = response.Metadata;
+            _gameId = game.GameID;
+            return game;
         }
 
 
@@ -145,6 +145,36 @@ namespace Risk.Runtime.BackendCommunication
 
             return response.Metadata;
         }
+        
+        /// <summary>
+        /// Retrieves the secret info for a specific player, including their mission and fallback mission.
+        /// This should only be fetched for the local player, never exposed to opponents.
+        /// </summary>
+        /// <param name="playerId">The unique identifier of the player whose secret info is being requested.</param>
+        /// <returns>
+        /// A <see cref="SecretPlayerInfo"/> instance containing the player's private data including mission details.
+        /// Returns null if the request fails or the response indicates an error.
+        /// </returns>
+        public async Task<SecretPlayerInfo> GetSecretPlayerInfo(string playerId)
+        {
+            string url = $"{_defaultLocalURL}/{_gameId}/{playerId}/get_secret_player_info";
+            using UnityWebRequest request = UnityWebRequest.Get(url);
+
+            await request.SendWebRequest();
+
+            if (HasError(request))
+                Debug.LogError($"Request failed: {request.error}");
+
+            var response = JsonConvert.DeserializeObject<ApiResponse<SecretPlayerInfo>>(request.downloadHandler.text);
+            if (response.Status != "success")
+            {
+                Debug.LogError($"GetSecretPlayerInfo failed: {response.Message}");
+                return null;
+            }
+
+            return response.Metadata;
+        }
+        
         
         
         private static bool HasError(UnityWebRequest request) 

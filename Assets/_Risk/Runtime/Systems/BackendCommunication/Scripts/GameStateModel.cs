@@ -17,18 +17,18 @@ namespace Risk.Runtime.BackendCommunication
         public event Action<Dictionary<string, PlayerInfo>> PlayersInfoUpdated;
         
         
-        [SerializeField] private NewGameMetadata _newGameMetadata;
+        [SerializeField] private Game _game;
         [SerializeField] private BoardInfo _boardInfo;
         
         private Dictionary<string, TerritoryInfo> _territoriesInfo = new();
         private Dictionary<string, PlayerInfo> _playersInfo = new();
         
-        public NewGameMetadata NewGameMetadata
+        public Game Game
         {
-            get => _newGameMetadata;
+            get => _game;
             set
             {
-                _newGameMetadata = value;
+                _game = value;
                 NewGameStarted?.Invoke();
                 Debug.Log("New Game Started");
             }

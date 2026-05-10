@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -14,66 +11,210 @@ namespace Risk.Runtime.BackendCommunication
     /// </summary>
     public class BackendManager : MonoBehaviour
     {
-        [SerializeField] private string _defaultLocalURL = "http://127.0.0.1:8000";
-        [SerializeField] private string _gameId = "000";
+        [SerializeField] private string _defaultLocalURL = "http://127.0.0.1:8000/games";
+        private string _gameId;
+        
+        private class PlayerNames
+        {
+            [JsonProperty("player_names")]
+            public List<string> Names;
+        }
+        
+        /// <summary>
+        /// Called once at the beginning of the game to create a new game session.
+        /// Creates a new game on the backend server with the provided list of player names.
+        /// This method sends a POST request to initialize a new game session and retrieves the associated game metadata.
+        /// </summary>
+        /// <param name="playerNames">A list of player names to be included in the new game session.</param>
+        /// <returns>
+        /// An instance of <see cref="Game"/> containing information about the newly created game session,
+        /// including its unique game ID.
+        /// Returns null if the request fails or if the backend response indicates an error.
+        /// </returns>
+        public async Task<Game> PostNewGame(List<string> playerNames)
+        {
+            string url = $"{_defaultLocalURL}/new_game";
+            string playerNamesJson = JsonConvert.SerializeObject(new PlayerNames { Names = playerNames });
+            Debug.Log($"Posting new game with {playerNamesJson}");
+            using UnityWebRequest request = UnityWebRequest.Post(url, playerNamesJson, "application/json");
+            
+            await request.SendWebRequest();
+            
+            if (HasError(request)) 
+                Debug.LogError($"Request failed: {request.error}");
+            
+            var response = JsonConvert.DeserializeObject<ApiResponse<Game>>(request.downloadHandler.text);
+            if (response.Status != "success")
+            {
+                Debug.LogError($"PostNewGame failed: {response.Message}");
+                return null;
+            }
+            
+            Game game = response.Metadata;
+            _gameId = game.GameID;
+            return game;
+        }
+
+        public async Task<bool> PostStartGame()
+        {
+            string url = $"{_defaultLocalURL}/{_gameId}/start";
+            using UnityWebRequest request = UnityWebRequest.Post(url, null, "application/json");
+            
+            await request.SendWebRequest();
+            
+            if (HasError(request)) 
+                Debug.LogError($"Request failed: {request.error}");
+            
+            var response = JsonConvert.DeserializeObject<ApiResponse<Game>>(request.downloadHandler.text);
+            if (response.Status != "success")
+            {
+                Debug.LogError($"StartGame failed: {response.Message}");
+                return false;
+            }    
+            
+            return true;
+        }
+        
+        
+        /// <summary>
+        /// Called once at the beginning of the game to setup the board.
+        /// Retrieves the current board information, including details about continents and other game-related metadata.
+        /// This method sends a GET request to the backend server using the active game ID to fetch the board state.
+        /// </summary>
+        /// <returns>
+        /// An instance of <see cref="BoardInfo"/> containing data about the game's board configuration,
+        /// including continents and their composition.
+        /// Returns null if the request fails or if the response indicates an error.
+        /// </returns>
+        public async Task<BoardInfo> GetBoardInfo()
+        {
+            string url = $"{_defaultLocalURL}/{_gameId}/get_board_info";
+            using UnityWebRequest request = UnityWebRequest.Get(url);
+            
+            await request.SendWebRequest();
+            
+            if (HasError(request)) 
+                Debug.LogError($"Request failed: {request.error}");
+            
+            var response = JsonConvert.DeserializeObject<ApiResponse<BoardInfo>>(request.downloadHandler.text);
+            if (response.Status != "success")
+            {
+                Debug.LogError($"GetBoardInfo failed: {response.Message}");
+                return null;
+            }
+            
+            return response.Metadata;
+        }
 
         /// <summary>
-        /// Gets GameInfo + all PlayerInfo in optimal sequence (1 GameInfo call + N Player calls)
+        /// Called every time there is a change in the board state (probably every turn phase!) to get the territories info after player actions.
+        /// Retrieves information about all territories, including ownership and the number of armies stationed.
+        /// The data is fetched from the backend server based on the current game context.
         /// </summary>
-        public async Task<(GameInfo gameInfo, List<PlayerInfo> players)> GetInitialDataAsync(CancellationToken cancellationToken = default)
+        /// <returns>
+        /// A dictionary where the keys are territory identifiers as strings and the values are
+        /// <see cref="TerritoryInfo"/> objects containing details about the territories.
+        /// Returns null if the request fails or if an error occurs.
+        /// </returns>
+        public async Task<Dictionary<string, TerritoryInfo>> GetTerritoriesInfo()
         {
-            try
+            string url = $"{_defaultLocalURL}/{_gameId}/get_territories_info";
+            using UnityWebRequest request = UnityWebRequest.Get(url);
+    
+            await request.SendWebRequest();
+    
+            if (HasError(request))
+                Debug.LogError($"Request failed: {request.error}");
+    
+            var response = JsonConvert.DeserializeObject<ApiResponse<Dictionary<string, TerritoryInfo>>>(request.downloadHandler.text);
+            if (response.Status != "success")
             {
-                // Step 1: Get GameInfo ONCE
-                GameInfo gameInfo = await GetGameInfoAsync(cancellationToken);
-                
-                // Step 2: Get all players in parallel using gameInfo.Players
-                List<PlayerInfo> players = await GetPlayersParallelAsync(gameInfo.Players, cancellationToken);
-                
-                Debug.Log($"✅ Loaded {gameInfo.Territories.Count} territories, {players.Count} players");
-                return (gameInfo, players);
+                Debug.LogError($"GetTerritoriesInfo failed: {response.Message}");
+                return null;
             }
-            catch (Exception ex)
-            {
-                Debug.LogError($"GetInitialData failed: {ex.Message}");
-                return (null, null);
-            }
+    
+            return response.Metadata;
         }
 
-        private async Task<GameInfo> GetGameInfoAsync(CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Retrieves information about all players in the current game, including their names, territories, armies,
+        /// and game status details such as whether they are eliminated or have won.
+        /// The data is fetched from the backend server based on the current game context.
+        /// </summary>
+        /// <returns>
+        /// A dictionary where the keys are player identifiers as strings, and the values are
+        /// <see cref="PlayerInfo"/> objects containing details about each player.
+        /// Returns null if the request fails, an error occurs, or the response indicates a failure.
+        /// </returns>
+        public async Task<Dictionary<string, PlayerInfo>> GetPlayersInfo()
         {
-            string url = $"{_defaultLocalURL}/{_gameId}/info";
-            using var request = UnityWebRequest.Get(url);
+            string url = $"{_defaultLocalURL}/{_gameId}/get_players_info";
+            using UnityWebRequest request = UnityWebRequest.Get(url);
+    
+            await request.SendWebRequest();
+    
+            if (HasError(request))
+                Debug.LogError($"Request failed: {request.error}");
             
+            var response = JsonConvert.DeserializeObject<ApiResponse<Dictionary<string, PlayerInfo>>>(request.downloadHandler.text);
+            if (response.Status != "success")
+            {
+                Debug.LogError($"GetPlayersInfo failed: {response.Message}");
+                return null;
+            }
+
+            return response.Metadata;
+        }
+        
+        /// <summary>
+        /// Retrieves the secret info for a specific player, including their mission and fallback mission.
+        /// This should only be fetched for the local player, never exposed to opponents.
+        /// </summary>
+        /// <param name="playerId">The unique identifier of the player whose secret info is being requested.</param>
+        /// <returns>
+        /// A <see cref="SecretPlayerInfo"/> instance containing the player's private data including mission details.
+        /// Returns null if the request fails or the response indicates an error.
+        /// </returns>
+        public async Task<SecretPlayerInfo> GetSecretPlayerInfo(string playerId)
+        {
+            string url = $"{_defaultLocalURL}/{_gameId}/player/{playerId}/get_secret_player_info";
+            using UnityWebRequest request = UnityWebRequest.Get(url);
+
             await request.SendWebRequest();
 
-            if (HasError(request)) 
-                throw new Exception($"GetGameInfo failed: {request.error}");
+            if (HasError(request))
+                Debug.LogError($"Request failed: {request.error}");
 
-            string json = request.downloadHandler.text;
-            return JsonConvert.DeserializeObject<GameInfo>(json);
+            var response = JsonConvert.DeserializeObject<ApiResponse<SecretPlayerInfo>>(request.downloadHandler.text);
+            if (response.Status != "success")
+            {
+                Debug.LogError($"GetSecretPlayerInfo failed: {response.Message}");
+                return null;
+            }
+
+            return response.Metadata;
         }
 
-        private async Task<List<PlayerInfo>> GetPlayersParallelAsync(List<string> playerIds, CancellationToken cancellationToken = default)
+        public async Task<TurnInfo> GetTurnInfo()
         {
-            var playerTasks = playerIds.Select(playerId => GetPlayerInfoAsync(playerId, cancellationToken));
-            PlayerInfo[] players = await Task.WhenAll(playerTasks);
-            return players.ToList();
-        }
+            string url = $"{_defaultLocalURL}/{_gameId}/get_turn_info";
+            using UnityWebRequest request = UnityWebRequest.Get(url);
 
-        private async Task<PlayerInfo> GetPlayerInfoAsync(string playerId, CancellationToken cancellationToken = default)
-        {
-            string url = $"{_defaultLocalURL}/{_gameId}/players/{playerId}/info";
-            using var request = UnityWebRequest.Get(url);
-            
             await request.SendWebRequest();
-
-            if (HasError(request)) 
-                throw new Exception($"GetPlayerInfo({playerId}) failed: {request.error}");
-
-            return JsonConvert.DeserializeObject<PlayerInfo>(request.downloadHandler.text);
+            
+            if (HasError(request))
+                Debug.LogError($"Request failed: {request.error}");
+            
+            var response = JsonConvert.DeserializeObject<ApiResponse<TurnInfo>>(request.downloadHandler.text);
+            if (response.Status != "success")
+            {
+                Debug.LogError($"GetTurnInfo failed: {response.Message}");
+                return null;
+            }
+            
+            return response.Metadata;
         }
-
+        
         private static bool HasError(UnityWebRequest request) 
             => request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError;
     }

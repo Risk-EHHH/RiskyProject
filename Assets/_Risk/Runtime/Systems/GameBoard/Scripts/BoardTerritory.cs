@@ -26,8 +26,12 @@ namespace Risk.Runtime.GameBoard
         private Color _territoryOriginalColor;
         
         public string TerritoryName => _territoryName;
-        public string OwnerId => _ownerId;
-        
+        public string OwnerId
+        {
+            get => _ownerId;
+            set => _ownerId = value;
+        }
+
         public int TroopCount
         {
             get => _troopCount;
@@ -95,12 +99,6 @@ namespace Risk.Runtime.GameBoard
             DependencyValidator.NotNull(_troopsNumberTMPText, this);
             
             _territoryName = gameObject.transform.name;
-        }
-
-        private void Start()
-        {
-            string[] names = { "Emanuele", "Marco", "Davide" };
-            _ownerId = names[Random.Range(0, names.Length)];
         }
         
         #endregion

@@ -1,6 +1,5 @@
-using System;
 using MyUtils.DependencyValidator;
-using Risk.Runtime.BackendCommunication;
+using Risk.Runtime.GameState;
 using UnityEngine;
 
 namespace Risk.Runtime.HUD
@@ -18,7 +17,7 @@ namespace Risk.Runtime.HUD
         
         #endregion
 
-        public void AddPlayerInfo(PlayerInfo playerInfo)
+        public void AddPlayerInfo(PlayerState playerInfo)
         {
             var playerInfoCard = Instantiate(_playerInfoCardPrefab, transform);
             playerInfoCard.UpdatePlayerInfo(playerInfo);

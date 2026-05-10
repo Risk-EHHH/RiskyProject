@@ -7389,6 +7389,7 @@ GameObject:
   - component: {fileID: 768583274}
   - component: {fileID: 768583271}
   - component: {fileID: 768583273}
+  - component: {fileID: 768583275}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -7477,6 +7478,23 @@ MonoBehaviour:
   - Marco
   - Davide
   - Emanuele
+--- !u!114 &768583275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768583270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2073bef48b5654791d7c87829aade3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurnManager
+  CurrentTurn:
+    PreviousPhase: 0
+    CurrentPhase: 0
+    PreviousPlayer: 
+    CurrentPlayer: 
 --- !u!1001 &770534969
 PrefabInstance:
   m_ObjectHideFlags: 0

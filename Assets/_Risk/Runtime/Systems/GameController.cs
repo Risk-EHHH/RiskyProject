@@ -14,6 +14,8 @@ namespace Risk.Runtime
         private BackendManager _backendManager;
         private GameStateModel _gameStateModel;
 
+        private bool _isGameStarted;
+        
         private void Awake()
         {
             _backendManager = GetComponent<BackendManager>();
@@ -30,8 +32,12 @@ namespace Risk.Runtime
 
         private void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.RightArrow))
-                MockChangeTurnPhase();
+            if (!_isGameStarted) return;
+            
+            if (UnityEngine.Input.GetKeyDown(KeyCode.N)) // in the future this should happen after the player finishes a turn phase (e.g., hooked to a UI button the plater presses when the turn is over)  
+            {
+                FetchTurnState();
+            }
         }
 
         private async Task InitializeGameAsync()
@@ -40,6 +46,8 @@ namespace Risk.Runtime
 
             Game gameDto = await _backendManager.PostNewGame(_playerNames);
             _gameStateModel.Game = GameStateMapper.ToGameState(gameDto);
+            
+            _isGameStarted = await _backendManager.PostStartGame();
 
             BoardInfo boardDto = await _backendManager.GetBoardInfo();
             _gameStateModel.Board = GameStateMapper.ToBoardState(boardDto);
@@ -55,6 +63,12 @@ namespace Risk.Runtime
         {
             Dictionary<string, TerritoryInfo> territoriesDto = await _backendManager.GetTerritoriesInfo();
             _gameStateModel.Territories = GameStateMapper.ToTerritoryStates(territoriesDto);
+        }
+        
+        private async void FetchTurnState()
+        {
+            TurnInfo turnDto = await _backendManager.GetTurnInfo();
+            _gameStateModel.TurnState = GameStateMapper.ToTurnState(turnDto);
         }
     }
 }

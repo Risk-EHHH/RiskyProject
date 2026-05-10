@@ -104,5 +104,14 @@ namespace Risk.Runtime.BackendCommunication
                 }
             };
         }
+
+        public static TurnState ToTurnState(TurnInfo dto)
+        {
+            return new TurnState
+            {
+                CurrentPhase = dto.CurrentPhase,
+                CurrentPlayer = dto.CurrentPlayer
+            };
+        }
     }
 }

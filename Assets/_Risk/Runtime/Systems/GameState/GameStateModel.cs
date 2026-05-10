@@ -11,13 +11,15 @@ namespace Risk.Runtime.GameState
         public event Action<List<TerritoryState>> TerritoriesUpdated;
         public event Action<List<PlayerState>> PlayersUpdated;
         public event Action<SecretPlayerState> SecretPlayerUpdated;
-
+        public event Action<TurnState> TurnStateUpdated;
+        
         [SerializeField] private GameState _game;
         [SerializeField] private BoardState _board;
         [SerializeField] private List<TerritoryState> _territories = new();
         [SerializeField] private List<PlayerState> _players = new();
         [SerializeField] private SecretPlayerState _secretPlayer;
-
+        [SerializeField] private TurnState _turnState;
+        
         public GameState Game
         {
             get => _game;
@@ -65,6 +67,16 @@ namespace Risk.Runtime.GameState
             {
                 _secretPlayer = value;
                 SecretPlayerUpdated?.Invoke(_secretPlayer);
+            }
+        }
+        
+        public TurnState TurnState
+        {
+            get => _turnState;
+            set
+            {
+                _turnState = value;
+                TurnStateUpdated?.Invoke(_turnState);
             }
         }
     }

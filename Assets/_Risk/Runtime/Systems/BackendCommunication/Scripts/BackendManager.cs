@@ -11,7 +11,7 @@ namespace Risk.Runtime.BackendCommunication
     /// </summary>
     public class BackendManager : MonoBehaviour
     {
-        [SerializeField] private string _defaultLocalURL = "http://127.0.0.1:8000";
+        [SerializeField] private string _defaultLocalURL = "http://127.0.0.1:8000/games";
         private string _gameId;
         
         private class PlayerNames
@@ -55,7 +55,27 @@ namespace Risk.Runtime.BackendCommunication
             return game;
         }
 
-
+        public async Task<bool> PostStartGame()
+        {
+            string url = $"{_defaultLocalURL}/{_gameId}/start";
+            using UnityWebRequest request = UnityWebRequest.Post(url, null, "application/json");
+            
+            await request.SendWebRequest();
+            
+            if (HasError(request)) 
+                Debug.LogError($"Request failed: {request.error}");
+            
+            var response = JsonConvert.DeserializeObject<ApiResponse<Game>>(request.downloadHandler.text);
+            if (response.Status != "success")
+            {
+                Debug.LogError($"StartGame failed: {response.Message}");
+                return false;
+            }    
+            
+            return true;
+        }
+        
+        
         /// <summary>
         /// Called once at the beginning of the game to setup the board.
         /// Retrieves the current board information, including details about continents and other game-related metadata.
@@ -157,7 +177,7 @@ namespace Risk.Runtime.BackendCommunication
         /// </returns>
         public async Task<SecretPlayerInfo> GetSecretPlayerInfo(string playerId)
         {
-            string url = $"{_defaultLocalURL}/{_gameId}/{playerId}/get_secret_player_info";
+            string url = $"{_defaultLocalURL}/{_gameId}/player/{playerId}/get_secret_player_info";
             using UnityWebRequest request = UnityWebRequest.Get(url);
 
             await request.SendWebRequest();
@@ -174,8 +194,26 @@ namespace Risk.Runtime.BackendCommunication
 
             return response.Metadata;
         }
-        
-        
+
+        public async Task<TurnInfo> GetTurnInfo()
+        {
+            string url = $"{_defaultLocalURL}/{_gameId}/get_turn_info";
+            using UnityWebRequest request = UnityWebRequest.Get(url);
+
+            await request.SendWebRequest();
+            
+            if (HasError(request))
+                Debug.LogError($"Request failed: {request.error}");
+            
+            var response = JsonConvert.DeserializeObject<ApiResponse<TurnInfo>>(request.downloadHandler.text);
+            if (response.Status != "success")
+            {
+                Debug.LogError($"GetTurnInfo failed: {response.Message}");
+                return null;
+            }
+            
+            return response.Metadata;
+        }
         
         private static bool HasError(UnityWebRequest request) 
             => request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError;

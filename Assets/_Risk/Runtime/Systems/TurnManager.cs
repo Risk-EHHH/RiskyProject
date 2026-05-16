@@ -1,11 +1,11 @@
+using System;
 using MyUtils.DependencyValidator;
 using Risk.Runtime.GameState;
 using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
-    private GameStateModel _gameStateModel;
-
+    [Serializable]
     public enum TurnPhase
     {
         None,
@@ -15,9 +15,19 @@ public class TurnManager : MonoBehaviour
         InvadePhase,
         FortificationPhase
     }
+
+    [Serializable]
+    public class Turn
+    {
+        public TurnPhase PreviousPhase = TurnPhase.None;
+        public TurnPhase CurrentPhase = TurnPhase.None;
+        public string PreviousPlayer; 
+        public string CurrentPlayer;
+    }
     
-    public TurnPhase CurrentPhase = TurnPhase.None;
-    public string CurrentPlayer; 
+    public Turn CurrentTurn;
+    
+    private GameStateModel _gameStateModel;
     
     private void Awake()
     {
@@ -30,18 +40,35 @@ public class TurnManager : MonoBehaviour
         _gameStateModel.TurnStateUpdated += OnTurnStateUpdated;
     }
 
+    private void OnDisable()
+    {
+        _gameStateModel.TurnStateUpdated -= OnTurnStateUpdated;
+    }
+
     private void OnTurnStateUpdated(TurnState turn)
     {
-        CurrentPhase = turn.CurrentPhase switch
+        if (turn.CurrentPlayer != CurrentTurn.CurrentPlayer) //turn has changed
+        {
+            CurrentTurn.PreviousPlayer = CurrentTurn.CurrentPlayer;
+            CurrentTurn.CurrentPlayer = turn.CurrentPlayer;
+        }
+
+        TurnPhase newPhase = turn.CurrentPhase switch
         {
             "initial_reinforcement_phase" => TurnPhase.InitialReinforcementPhase,
-            "reinforcement_phase" => TurnPhase.ReinforcementPhase,
-            "attack_phase" => TurnPhase.AttackPhase,
-            "invade_phase" => TurnPhase.InvadePhase,
-            "fortification_phase" => TurnPhase.FortificationPhase,
-            _ => TurnPhase.None
+            "reinforcement_phase"         => TurnPhase.ReinforcementPhase,
+            "attack_phase"                => TurnPhase.AttackPhase,
+            "invade_phase"                => TurnPhase.InvadePhase,
+            "fortification_phase"         => TurnPhase.FortificationPhase,
+            _                             => TurnPhase.None
         };
-        
-        CurrentPlayer = turn.CurrentPlayer;
+
+        if (newPhase != CurrentTurn.CurrentPhase)
+        {
+            CurrentTurn.PreviousPhase = CurrentTurn.CurrentPhase;
+            CurrentTurn.CurrentPhase = newPhase;
+        }
     }
+    
+    public bool HasPhaseChanged => CurrentTurn.PreviousPhase != CurrentTurn.CurrentPhase;
 }

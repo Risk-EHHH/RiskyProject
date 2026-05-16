@@ -20,22 +20,30 @@ namespace Risk.Runtime.HUD
 
         private void OnEnable()
         {
+            _gameStateModel.PlayersInitialized += OnPlayersInitialized;
             _gameStateModel.PlayersUpdated += OnPlayersUpdated;
+            _gameStateModel.TurnStateUpdated += OnTurnStateUpdated;
         }
-        
+
         private void OnDisable()
         {
+            _gameStateModel.PlayersInitialized -= OnPlayersInitialized;
             _gameStateModel.PlayersUpdated -= OnPlayersUpdated;
+            _gameStateModel.TurnStateUpdated -= OnTurnStateUpdated;
+            
         }
 
         #endregion
 
-        private void OnPlayersUpdated(List<PlayerState> players)
+        private void OnPlayersInitialized(List<PlayerState> players) =>
+            _topBarManager.InitializePlayers(players);
+
+        private void OnPlayersUpdated(List<PlayerState> players) =>
+            _topBarManager.UpdatePlayers(players);
+        
+        private void OnTurnStateUpdated(TurnState turn)
         {
-            foreach (PlayerState player in players)
-            {
-                _topBarManager.AddPlayerInfo(player);
-            }
+            _topBarManager.HighlightPlayer(turn.CurrentPlayer);
         }
     }
 }

@@ -111,7 +111,7 @@ namespace Risk.Runtime.Input
             Vector3 offset = mouseWorldBefore - mouseWorldAfter;
             _mainCamera.transform.position += offset;
             
-            Debug.Log($"Zoom: {scrollDelta}, Size: {currentSize}, Offset: {offset}");
+            //Debug.Log($"Zoom: {scrollDelta}, Size: {currentSize}, Offset: {offset}");
         }
         
         private void OnPanning(InputAction.CallbackContext ctx)

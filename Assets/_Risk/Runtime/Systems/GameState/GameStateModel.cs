@@ -9,6 +9,7 @@ namespace Risk.Runtime.GameState
         public event Action<GameState> GameStarted;
         public event Action<BoardState> BoardUpdated;
         public event Action<List<TerritoryState>> TerritoriesUpdated;
+        public event Action<List<PlayerState>> PlayersInitialized;
         public event Action<List<PlayerState>> PlayersUpdated;
         public event Action<SecretPlayerState> SecretPlayerUpdated;
         public event Action<TurnState> TurnStateUpdated;
@@ -19,6 +20,8 @@ namespace Risk.Runtime.GameState
         [SerializeField] private List<PlayerState> _players = new();
         [SerializeField] private SecretPlayerState _secretPlayer;
         [SerializeField] private TurnState _turnState;
+        
+        private bool _playersInitialized;
         
         public GameState Game
         {
@@ -56,7 +59,15 @@ namespace Risk.Runtime.GameState
             set
             {
                 _players = value;
-                PlayersUpdated?.Invoke(_players);
+                if (!_playersInitialized)
+                {
+                    _playersInitialized = true;
+                    PlayersInitialized?.Invoke(_players);
+                }
+                else
+                {
+                    PlayersUpdated?.Invoke(_players);
+                }
             }
         }
 

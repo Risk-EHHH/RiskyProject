@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyUtils.DependencyValidator;
@@ -17,6 +18,10 @@ namespace Risk.Runtime
         
         private bool _isGameStarted;
         
+        public event Action<string> ActionPerformed;
+
+        #region MonoBehaviour
+        
         private void Awake()
         {
             _backendManager = GetComponent<BackendManager>();
@@ -29,6 +34,16 @@ namespace Risk.Runtime
             DependencyValidator.ComponentExist(_turnManager, this);
         }
 
+        private void OnEnable()
+        {
+            ActionPerformed += OnActionPerformed;
+        }
+
+        private void OnDisable()
+        {
+            ActionPerformed -= OnActionPerformed;
+        }
+
         private async void Start()
         {
             await InitializeGameAsync();
@@ -38,26 +53,24 @@ namespace Risk.Runtime
         {
             if (!_isGameStarted) return;
             
-            if (UnityEngine.Input.GetKeyDown(KeyCode.N)) // in the future this should happen after the player finishes a turn phase (e.g., hooked to a UI button the plater presses when the turn is over)  
+            //reinforce mock, in the future there will be an ActionManager deciding which actions to take based on player interaction with UI
+            if (UnityEngine.Input.GetKeyDown(KeyCode.R))  
             {
-                FetchTurnState();
-                if (_turnManager.HasPhaseChanged)
-                {
-                    //OnTurnPhaseChanged(); //placeholder, turn logic needs to be well thought out when integrating also backend actions
-                }
+                Reinforce(_gameStateModel.TurnState.CurrentPlayer, "Alaska", 3);
             }
         }
 
+        #endregion
         // done only at the beginning
         private async Task InitializeGameAsync()
         {
             Debug.Log("Initializing game...");
 
+            // initialize game on the backend
             Game gameDto = await _backendManager.PostNewGame(_playerNames);
             _gameStateModel.Game = GameStateMapper.ToGameState(gameDto);
             
-            _isGameStarted = await _backendManager.PostStartGame();
-
+            // retrieve initial game state from the backend
             BoardInfo boardDto = await _backendManager.GetBoardInfo();
             _gameStateModel.Board = GameStateMapper.ToBoardState(boardDto);
 
@@ -66,8 +79,27 @@ namespace Risk.Runtime
 
             SecretPlayerInfo secretPlayerDto = await _backendManager.GetSecretPlayerInfo(_gameStateModel.Players[0].Id); // for now just the first player
             _gameStateModel.SecretPlayer = GameStateMapper.ToSecretPlayerState(secretPlayerDto);
+            
+            // trigger backend to start the game with the phase loop
+            _isGameStarted = await _backendManager.PostStartGame();
+            
+            FetchTurnState();
         }
 
+        /// <summary>
+        /// Handles the action performed event by fetching the result of the specified action and updating the game state if the action succeeds.
+        /// </summary>
+        /// <param name="actionId">The unique identifier of the action that was performed.</param>
+        private async void OnActionPerformed(string actionId)
+        {
+            ActionResult actionResult = await _backendManager.GetActionResult(actionId);
+            Debug.Log($"Action {actionId} result: {actionResult.ActionStatus}");
+            if (actionResult.ActionStatus != "SUCCESS") return;
+            Debug.Log($"Action {actionId} succeeded!");
+            FetchTurnState();
+            OnTurnPhaseChanged();
+        }
+        
         // done every time the turn phase changes
         private async void OnTurnPhaseChanged()
         {
@@ -81,11 +113,22 @@ namespace Risk.Runtime
             _gameStateModel.SecretPlayer = GameStateMapper.ToSecretPlayerState(secretPlayerDto);
         }
 
-        // done every time after the player makes an action
+
+        /// <summary>
+        /// Fetches the current turn state from the backend, updating the model and consequently the <see cref="TurnManager"/>.
+        /// </summary>
         private async void FetchTurnState()
         {
             TurnInfo turnDto = await _backendManager.GetTurnInfo();
             _gameStateModel.TurnState = GameStateMapper.ToTurnState(turnDto);
+        }
+
+        // --------------- Actions --------------- (in the future these could be done by the ActionManager)
+        
+        public async void Reinforce(string playerId, string territoryName, int armies)
+        {
+            PlayerAction playerAction = await _backendManager.PostReinforce(playerId, territoryName, armies);
+            ActionPerformed?.Invoke(playerAction.ActionId);
         }
     }
 }

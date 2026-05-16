@@ -69,6 +69,4 @@ public class TurnManager : MonoBehaviour
             CurrentTurn.CurrentPhase = newPhase;
         }
     }
-    
-    public bool HasPhaseChanged => CurrentTurn.PreviousPhase != CurrentTurn.CurrentPhase;
 }

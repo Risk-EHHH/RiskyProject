@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyUtils.DependencyValidator;
@@ -17,6 +18,10 @@ namespace Risk.Runtime
         
         private bool _isGameStarted;
         
+        public event Action<string> ActionPerformed;
+
+        #region MonoBehaviour
+        
         private void Awake()
         {
             _backendManager = GetComponent<BackendManager>();
@@ -29,6 +34,16 @@ namespace Risk.Runtime
             DependencyValidator.ComponentExist(_turnManager, this);
         }
 
+        private void OnEnable()
+        {
+            ActionPerformed += OnActionPerformed;
+        }
+
+        private void OnDisable()
+        {
+            ActionPerformed -= OnActionPerformed;
+        }
+
         private async void Start()
         {
             await InitializeGameAsync();
@@ -38,54 +53,90 @@ namespace Risk.Runtime
         {
             if (!_isGameStarted) return;
             
-            if (UnityEngine.Input.GetKeyDown(KeyCode.N)) // in the future this should happen after the player finishes a turn phase (e.g., hooked to a UI button the plater presses when the turn is over)  
-            {
-                FetchTurnState();
-                if (_turnManager.HasPhaseChanged)
-                {
-                    //OnTurnPhaseChanged(); //placeholder, turn logic needs to be well thought out when integrating also backend actions
-                }
-            }
+            if (UnityEngine.Input.GetKeyDown(KeyCode.R))  
+                Reinforce(_gameStateModel.TurnState.CurrentPlayer, "Alaska", 3);
         }
 
-        // done only at the beginning
+        #endregion
+
         private async Task InitializeGameAsync()
         {
             Debug.Log("Initializing game...");
 
-            Game gameDto = await _backendManager.PostNewGame(_playerNames);
-            _gameStateModel.Game = GameStateMapper.ToGameState(gameDto);
+            await SyncNewGame();
+            await SyncBoard();
+            await SyncPlayers();
+            await SyncSecretPlayer(_gameStateModel.Players[0].Id);
             
             _isGameStarted = await _backendManager.PostStartGame();
-
-            BoardInfo boardDto = await _backendManager.GetBoardInfo();
-            _gameStateModel.Board = GameStateMapper.ToBoardState(boardDto);
-
-            Dictionary<string, PlayerInfo> playersDto = await _backendManager.GetPlayersInfo();
-            _gameStateModel.Players = GameStateMapper.ToPlayerStates(playersDto);
-
-            SecretPlayerInfo secretPlayerDto = await _backendManager.GetSecretPlayerInfo(_gameStateModel.Players[0].Id); // for now just the first player
-            _gameStateModel.SecretPlayer = GameStateMapper.ToSecretPlayerState(secretPlayerDto);
+            
+            await SyncTurnState();
         }
 
-        // done every time the turn phase changes
-        private async void OnTurnPhaseChanged()
+        private async void OnActionPerformed(string actionId)
+        {
+            ActionResult actionResult = await _backendManager.GetActionResult(actionId);
+            if (actionResult.ActionStatus != "SUCCESS") return;
+            
+            Debug.Log($"Action {actionId} succeeded!");
+            await SyncTurnState();
+            await SyncTurnPhase();
+        }
+
+        // --------------- Sync methods ---------------
+
+        private async Task SyncNewGame()
+        {
+            Game gameDto = await _backendManager.PostNewGame(_playerNames);
+            _gameStateModel.Game = GameStateMapper.ToGameState(gameDto);
+        }
+
+        private async Task SyncBoard()
+        {
+            BoardInfo boardDto = await _backendManager.GetBoardInfo();
+            _gameStateModel.Board = GameStateMapper.ToBoardState(boardDto);
+        }
+
+        private async Task SyncPlayers()
+        {
+            Dictionary<string, PlayerInfo> playersDto = await _backendManager.GetPlayersInfo();
+            _gameStateModel.Players = GameStateMapper.ToPlayerStates(playersDto);
+        }
+
+        private async Task SyncTerritories()
         {
             Dictionary<string, TerritoryInfo> territoriesDto = await _backendManager.GetTerritoriesInfo();
             _gameStateModel.Territories = GameStateMapper.ToTerritoryStates(territoriesDto);
-            
-            Dictionary<string, PlayerInfo> playersDto = await _backendManager.GetPlayersInfo();
-            _gameStateModel.Players = GameStateMapper.ToPlayerStates(playersDto);
-            
-            SecretPlayerInfo secretPlayerDto = await _backendManager.GetSecretPlayerInfo(_gameStateModel.TurnState.CurrentPlayer); // for now just the first player
+        }
+
+        private async Task SyncSecretPlayer(string playerId)
+        {
+            SecretPlayerInfo secretPlayerDto = await _backendManager.GetSecretPlayerInfo(playerId);
             _gameStateModel.SecretPlayer = GameStateMapper.ToSecretPlayerState(secretPlayerDto);
         }
 
-        // done every time after the player makes an action
-        private async void FetchTurnState()
+        private async Task SyncTurnState()
         {
             TurnInfo turnDto = await _backendManager.GetTurnInfo();
             _gameStateModel.TurnState = GameStateMapper.ToTurnState(turnDto);
+        }
+
+        /// <summary>
+        /// Syncs all state that can change each turn phase: territories, players, and the local player's secret info.
+        /// </summary>
+        private async Task SyncTurnPhase()
+        {
+            await SyncTerritories();
+            await SyncPlayers();
+            await SyncSecretPlayer(_gameStateModel.TurnState.CurrentPlayer);
+        }
+
+        // --------------- Actions ---------------
+
+        public async void Reinforce(string playerId, string territoryName, int armies)
+        {
+            PlayerAction playerAction = await _backendManager.PostReinforce(playerId, territoryName, armies);
+            ActionPerformed?.Invoke(playerAction.ActionId);
         }
     }
 }

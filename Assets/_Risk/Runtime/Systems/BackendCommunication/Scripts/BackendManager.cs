@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -209,6 +210,70 @@ namespace Risk.Runtime.BackendCommunication
             if (response.Status != "success")
             {
                 Debug.LogError($"GetTurnInfo failed: {response.Message}");
+                return null;
+            }
+            
+            return response.Metadata;
+        }
+        
+        /// <summary>
+        /// Retrieves the result of a previously submitted action.
+        /// Should be called after any POST action to check whether it was accepted or rejected by the backend.
+        /// </summary>
+        /// <param name="actionId">The unique identifier of the action to retrieve the result for.</param>
+        /// <returns>
+        /// An <see cref="ActionResult"/> containing the action status, result, and error details if any.
+        /// Returns null if the request fails or the response indicates an error.
+        /// </returns>
+        public async Task<ActionResult> GetActionResult(string actionId)
+        {
+            string url = $"{_defaultLocalURL}/{_gameId}/action_result/{actionId}";
+            using UnityWebRequest request = UnityWebRequest.Get(url);
+
+            await request.SendWebRequest();
+
+            if (HasError(request))
+                Debug.LogError($"Request failed: {request.error}");
+
+            Debug.Log($"GetActionResult: {request.downloadHandler.text}");
+            var response = JsonConvert.DeserializeObject<ApiResponse<ActionResult>>(request.downloadHandler.text);
+            if (response.Status != "success")
+            {
+                Debug.LogError($"GetActionResult failed: {response.Message}");
+                return null;
+            }
+
+            return response.Metadata;
+        }
+
+        public async Task<PlayerAction> PostReinforce(string playerId, string territoryName, int armies)
+        {
+            string url = $"{_defaultLocalURL}/{_gameId}/action";
+
+            List<ReinforceTerritory> reinforceTerritories = new() { new ReinforceTerritory { Name = territoryName, Armies = armies } };
+
+            Reinforce reinforceData = new Reinforce
+            {
+                PlayerId = playerId,
+                Payload = new Payload
+                {
+                    Territories = reinforceTerritories
+                }
+            };
+            
+            string reinforceJson = JsonConvert.SerializeObject(reinforceData);
+            using UnityWebRequest request = UnityWebRequest.Post(url, reinforceJson, "application/json");
+            
+            await request.SendWebRequest();
+            
+            if (HasError(request)) 
+                Debug.LogError($"Request failed: {request.error}");
+            
+            var response = JsonConvert.DeserializeObject<ApiResponse<PlayerAction>>(request.downloadHandler.text);
+            if (response.Status != "accepted")
+            {
+                Debug.LogError($"PostReinforce error: {response.Message}");
+                Debug.LogError($"PostReinforce error: {response.Metadata.Error}");
                 return null;
             }
             

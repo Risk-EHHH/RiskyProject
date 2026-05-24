@@ -17,6 +17,7 @@ namespace Risk.Runtime.GameBoard
         [SerializeField] private TerritoryContextCard _hoveredTerritoryContextCard;
         
         private readonly Dictionary<string, BoardTerritory> _territoryViews = new();
+        private readonly Dictionary<string, string> _playerNames = new();
         private BoardTerritory _lastSelectedTerritory;
         private BoardTerritory _lastHoveredTerritory;
         
@@ -32,6 +33,9 @@ namespace Risk.Runtime.GameBoard
         {
             _gameStateModel.BoardUpdated += OnBoardUpdated;
             _gameStateModel.TerritoriesUpdated += OnTerritoriesUpdated;
+
+            _gameStateModel.PlayersInitialized += OnPlayersInitialized;
+            _gameStateModel.PlayersUpdated     += OnPlayersUpdated;
             
             _boardInputManager.BoardTerritoryClicked += OnBoardTerritoryClicked;
             _boardInputManager.BoardTerritoryHovered += OnBoardTerritoryHovered;
@@ -42,6 +46,9 @@ namespace Risk.Runtime.GameBoard
         {
             _gameStateModel.BoardUpdated -= OnBoardUpdated;
             _gameStateModel.TerritoriesUpdated -= OnTerritoriesUpdated;
+            
+            _gameStateModel.PlayersInitialized -= OnPlayersInitialized;
+            _gameStateModel.PlayersUpdated     -= OnPlayersUpdated;
             
             _boardInputManager.BoardTerritoryClicked -= OnBoardTerritoryClicked;
             _boardInputManager.BoardTerritoryHovered -= OnBoardTerritoryHovered;
@@ -79,6 +86,7 @@ namespace Risk.Runtime.GameBoard
                     {
                         territoryView.TroopCount = territory.Armies;
                         territoryView.OwnerId = territory.Owner;
+                        territoryView.OwnerName = _playerNames.GetValueOrDefault(territory.Owner, "Unknown");
                     }
                 }
             }
@@ -94,10 +102,21 @@ namespace Risk.Runtime.GameBoard
                 {
                     territoryView.TroopCount = territory.Armies;
                     territoryView.OwnerId = territory.Owner;
+                    territoryView.OwnerName = _playerNames.GetValueOrDefault(territory.Owner, "Unknown");
                 }
             }
         }
 
+        private void OnPlayersInitialized(List<PlayerState> players) => RebuildPlayerNames(players);
+        private void OnPlayersUpdated(List<PlayerState> players)     => RebuildPlayerNames(players);
+        
+        private void RebuildPlayerNames(List<PlayerState> players)
+        {
+            _playerNames.Clear();
+            foreach (PlayerState player in players)
+                _playerNames[player.Id] = player.Name;
+        }
+        
         private static string NormalizeTerritoryName(string territoryName)
         {
             return territoryName.Replace(" ", "").ToLower();
@@ -120,7 +139,7 @@ namespace Risk.Runtime.GameBoard
             _hoveredTerritoryContextCard.Set(new TerritoryContextCard.TerritoryDisplayData
             {
                 Name = hoveredTerritory.TerritoryName,
-                OwnerName = hoveredTerritory.OwnerId,
+                OwnerName = hoveredTerritory.OwnerName,
                 TroopCount = hoveredTerritory.TroopCount,
                 ScreenPosition = Camera.main.WorldToScreenPoint(hoveredTerritory.transform.position)
             });
@@ -147,7 +166,7 @@ namespace Risk.Runtime.GameBoard
             _selectedTerritoryContextCard.Set(new TerritoryContextCard.TerritoryDisplayData
             {
                 Name = selectedTerritory.TerritoryName,
-                OwnerName = selectedTerritory.OwnerId,
+                OwnerName = selectedTerritory.OwnerName,
                 TroopCount = selectedTerritory.TroopCount,
                 ScreenPosition = Camera.main.WorldToScreenPoint(selectedTerritory.transform.position)
             });

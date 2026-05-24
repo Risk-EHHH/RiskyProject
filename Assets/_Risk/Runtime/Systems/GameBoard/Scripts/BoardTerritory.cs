@@ -19,6 +19,7 @@ namespace Risk.Runtime.GameBoard
         [SerializeField] private PolygonCollider2D _territoryCollider;
         
         private string _ownerId;
+        private string _ownerName;
         private int _troopCount = 0;
         private bool _isHovered;
         private bool _isSelected;
@@ -30,6 +31,12 @@ namespace Risk.Runtime.GameBoard
         {
             get => _ownerId;
             set => _ownerId = value;
+        }
+        
+        public string OwnerName
+        {
+            get => _ownerName;
+            set => _ownerName = value;
         }
 
         public int TroopCount

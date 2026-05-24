@@ -64,8 +64,8 @@ namespace Risk.Runtime
             Debug.Log("Initializing game...");
 
             await SyncNewGame();
-            await SyncBoard();
             await SyncPlayers();
+            await SyncBoard();
             await SyncSecretPlayer(_gameStateModel.Players[0].Id);
             
             _isGameStarted = await _backendManager.PostStartGame();

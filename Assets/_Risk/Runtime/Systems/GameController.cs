@@ -53,8 +53,48 @@ namespace Risk.Runtime
         {
             if (!_isGameStarted) return;
             
-            if (UnityEngine.Input.GetKeyDown(KeyCode.R))  
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Space))  
                 Reinforce(_gameStateModel.TurnState.CurrentPlayer, "Alaska", 3);
+
+            if (UnityEngine.Input.GetKeyDown(KeyCode.I))
+            {
+                TurnState mockTurn = new TurnState
+                {
+                    CurrentPhase = "initial_reinforcement_phase",
+                    CurrentPlayer = _gameStateModel.Players[0].Id,
+                };
+                MockTurnChange(mockTurn);
+            }
+
+            if (UnityEngine.Input.GetKeyDown(KeyCode.R))
+            {
+                TurnState mockTurn = new TurnState
+                {
+                    CurrentPhase = "reinforcement_phase",
+                    CurrentPlayer = _gameStateModel.Players[0].Id,
+                };
+                MockTurnChange(mockTurn);
+            }
+
+            // if (UnityEngine.Input.GetKeyDown(KeyCode.A))
+            // {
+            //     TurnState mockTurn = new TurnState
+            //     {
+            //         CurrentPhase = "attack_phase",
+            //         CurrentPlayer = _gameStateModel.Players[0].Id,
+            //     };
+            //     MockTurnChange(mockTurn);
+            // }
+            
+            if (UnityEngine.Input.GetKeyDown(KeyCode.F))
+            {
+                TurnState mockTurn = new TurnState
+                {
+                    CurrentPhase = "fortification_phase",
+                    CurrentPlayer = _gameStateModel.Players[0].Id,
+                };
+                MockTurnChange(mockTurn);
+            }
         }
 
         #endregion
@@ -119,6 +159,11 @@ namespace Risk.Runtime
         {
             TurnInfo turnDto = await _backendManager.GetTurnInfo();
             _gameStateModel.TurnState = GameStateMapper.ToTurnState(turnDto);
+        }
+
+        private void MockTurnChange(TurnState mockTurn)
+        {
+            _gameStateModel.TurnState = mockTurn;
         }
 
         /// <summary>

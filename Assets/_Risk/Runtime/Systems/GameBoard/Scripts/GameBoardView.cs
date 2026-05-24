@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MyUtils.DependencyValidator;
 using Risk.Runtime.GameState;
@@ -15,11 +16,14 @@ namespace Risk.Runtime.GameBoard
         [SerializeField] private List<BoardContinent> _boardContinents;
         [SerializeField] private TerritoryContextCard _selectedTerritoryContextCard;
         [SerializeField] private TerritoryContextCard _hoveredTerritoryContextCard;
+        [SerializeField] private TurnManager _turnManager;
         
         private readonly Dictionary<string, BoardTerritory> _territoryViews = new();
         private readonly Dictionary<string, string> _playerNames = new();
         private BoardTerritory _lastSelectedTerritory;
         private BoardTerritory _lastHoveredTerritory;
+        
+        private Turn _currentTurn;
         
         #region MonoBehaviour
 
@@ -27,6 +31,10 @@ namespace Risk.Runtime.GameBoard
         {
             DependencyValidator.NotNull(_gameStateModel, this);
             DependencyValidator.ListNotNull(_boardContinents, this);
+            DependencyValidator.NotNull(_selectedTerritoryContextCard, this);
+            DependencyValidator.NotNull(_hoveredTerritoryContextCard, this);
+            DependencyValidator.NotNull(_boardInputManager, this);
+            DependencyValidator.NotNull(_turnManager, this);
         }
 
         private void OnEnable()
@@ -40,6 +48,8 @@ namespace Risk.Runtime.GameBoard
             _boardInputManager.BoardTerritoryClicked += OnBoardTerritoryClicked;
             _boardInputManager.BoardTerritoryHovered += OnBoardTerritoryHovered;
             _boardInputManager.BoardTerritoryHoverExited += OnBoardTerritoryHoverExited;
+
+            _turnManager.OnTurnOrPhaseChanged += OnTurnOrPhaseChanged;
         }
         
         private void OnDisable()
@@ -53,6 +63,8 @@ namespace Risk.Runtime.GameBoard
             _boardInputManager.BoardTerritoryClicked -= OnBoardTerritoryClicked;
             _boardInputManager.BoardTerritoryHovered -= OnBoardTerritoryHovered;
             _boardInputManager.BoardTerritoryHoverExited -= OnBoardTerritoryHoverExited;
+            
+            _turnManager.OnTurnOrPhaseChanged -= OnTurnOrPhaseChanged;
         }
 
         private void Start()
@@ -62,6 +74,7 @@ namespace Risk.Runtime.GameBoard
 
         #endregion
 
+        
         private void PopulateTerritories()
         {
             foreach (BoardContinent boardContinent in _boardContinents)
@@ -72,6 +85,12 @@ namespace Risk.Runtime.GameBoard
                     _territoryViews.Add(normalizedName, boardTerritory);
                 }
             }
+        }
+        
+        private void OnTurnOrPhaseChanged(Turn turn)
+        {
+            _currentTurn = turn;
+            //TODO it could be that in the future we will need to update the latest context card based on the current turn phase if is it already active
         }
 
         // Called once at game start
@@ -136,7 +155,7 @@ namespace Risk.Runtime.GameBoard
                 return;
             }
 
-            _hoveredTerritoryContextCard.Set(new TerritoryContextCard.TerritoryDisplayData
+            _hoveredTerritoryContextCard.Set(new TerritoryDisplayData
             {
                 Name = hoveredTerritory.TerritoryName,
                 OwnerName = hoveredTerritory.OwnerName,
@@ -163,15 +182,38 @@ namespace Risk.Runtime.GameBoard
 
             _lastSelectedTerritory = selectedTerritory;
 
-            _selectedTerritoryContextCard.Set(new TerritoryContextCard.TerritoryDisplayData
+            _selectedTerritoryContextCard.Set(new TerritoryDisplayData
             {
                 Name = selectedTerritory.TerritoryName,
                 OwnerName = selectedTerritory.OwnerName,
                 TroopCount = selectedTerritory.TroopCount,
-                ScreenPosition = Camera.main.WorldToScreenPoint(selectedTerritory.transform.position)
+                ScreenPosition = Camera.main.WorldToScreenPoint(selectedTerritory.transform.position),
+                AvailableAction = ResolveAction(selectedTerritory)
             });
-            _selectedTerritoryContextCard.ToggleActions(true);
             _hoveredTerritoryContextCard.ToggleCard(false);
         }
+        
+        private TerritoryAction ResolveAction(BoardTerritory territory)
+        {
+            bool isOwner = territory.OwnerId == _currentTurn.CurrentPlayer;
+
+            return _currentTurn.CurrentPhase switch
+            {
+                TurnPhase.InitialReinforcementPhase when isOwner  => TerritoryAction.Reinforce,
+                TurnPhase.ReinforcementPhase        when isOwner  => TerritoryAction.Reinforce,
+                TurnPhase.FortificationPhase        when isOwner  => TerritoryAction.Fortify,
+                _                                                  => TerritoryAction.None
+            };
+            
+            //TODO Resolve Action should also work for Attack and Invade actions, but on an adjacent territory onHover! "Invade" will be only one territory right after the attack phase if successful
+        }
+    }
+    
+    public enum TerritoryAction
+    {
+        None,
+        Reinforce,
+        Attack,
+        Fortify
     }
 }

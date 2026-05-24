@@ -1,7 +1,6 @@
 using MyUtils.DependencyValidator;
 using TMPro;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 
 namespace Risk.Runtime.GameBoard
